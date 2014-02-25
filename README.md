@@ -23,6 +23,11 @@ or if you want to avoid SNAPSHOT checking
 cd commons/parent
 mvn clean install -nsu
 
+and if you want to skip all tests
+
+cd commons/parent
+mvn clean install -DskipTests -DskipIT
+
 HOW TO RUN
 ============
 
