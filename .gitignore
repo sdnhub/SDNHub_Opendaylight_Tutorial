@@ -15,3 +15,8 @@ target
 .project
 .settings
 MANIFEST.MF
+
+# Package Files #
+*.jar
+*.war
+*.ear
