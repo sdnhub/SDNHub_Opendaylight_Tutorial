@@ -38,7 +38,9 @@
               org.opendaylight.controller.switchmanager,
               org.apache.felix.dm,
               org.osgi.service.component,
-              org.slf4j
+              org.slf4j,
+              org.eclipse.osgi.framework.console,
+              org.osgi.framework
             </Import-Package>
             <Export-Package>
               org.opendaylight.controller.tutorial_L2_forwarding
@@ -62,6 +64,10 @@
       <groupId>org.opendaylight.controller</groupId>
       <artifactId>sal</artifactId>
       <version>0.5.0</version>
+      </dependency>
+      <dependency>
+      <groupId>equinoxSDK381</groupId>
+      <artifactId>org.eclipse.osgi</artifactId>
       </dependency>
       <dependency>
       <groupId>junit</groupId>

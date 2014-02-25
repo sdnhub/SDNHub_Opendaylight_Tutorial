@@ -26,6 +26,10 @@ import org.opendaylight.controller.sal.packet.Packet;
 import org.opendaylight.controller.sal.packet.PacketResult;
 import org.opendaylight.controller.sal.packet.RawPacket;
 import org.opendaylight.controller.switchmanager.ISwitchManager;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleException;
+import org.osgi.framework.FrameworkUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -76,6 +80,25 @@ public class TutorialL2Forwarding implements IListenDataPacket {
      * */
     void init() {
         logger.info("Initialized");
+        BundleContext bundleContext = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
+        for(Bundle bundle : bundleContext.getBundles()) {
+/*
+            if (bundle.getSymbolicName().contains("yang")) {
+                try {
+                    bundle.stop();
+                } catch (BundleException e) {
+                    logger.error("Exception in Bundle uninstall "+bundle.getSymbolicName(), e);
+                }
+            }
+*/
+            if (bundle.getSymbolicName().contains("simpleforwarding")) {
+                try {
+                    bundle.stop();
+                } catch (BundleException e) {
+                    logger.error("Exception in Bundle uninstall "+bundle.getSymbolicName(), e);
+                }
+            }
+        }
     }
 
     /**
