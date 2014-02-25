@@ -33,7 +33,6 @@ public class TutorialL2Forwarding implements IListenDataPacket {
     private static final Logger logger = LoggerFactory
             .getLogger(TutorialL2Forwarding.class);
     private ISwitchManager switchManager = null;
-
     private IFlowProgrammerService programmer = null;
     private IDataPacketService dataPacketService = null;
     private final Map<Long, NodeConnector> mac_to_port = new HashMap<Long, NodeConnector>();
