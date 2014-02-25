@@ -8,7 +8,7 @@
   <parent>
     <groupId>org.opendaylight.controller</groupId>
     <artifactId>commons.opendaylight</artifactId>
-    <version>1.4.1-SNAPSHOT</version>
+    <version>1.4.1</version>
   </parent>
   <groupId>org.sdnhub.tutorial_L2_forwarding</groupId>
   <artifactId>commons.tutorial_L2_forwarding</artifactId>
