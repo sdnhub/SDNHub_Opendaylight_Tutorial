@@ -1,14 +1,20 @@
 /*
- * Copyright (c) 2013 Cisco Systems, Inc. and others.  All rights reserved.
+ * Copyright (C) 2014 SDN Hub
+
+ Licensed under the GNU GENERAL PUBLIC LICENSE, Version 3.
+ You may not use this file except in compliance with this License.
+ You may obtain a copy of the License at
+
+    http://www.gnu.org/licenses/gpl-3.0.txt
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+ implied.
+
  *
- * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution,
- * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-/*
- *
- */
 package org.opendaylight.controller.tutorial_L2_forwarding.internal;
 
 import java.util.HashMap;
@@ -80,25 +86,6 @@ public class TutorialL2Forwarding implements IListenDataPacket {
      * */
     void init() {
         logger.info("Initialized");
-        BundleContext bundleContext = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
-        for(Bundle bundle : bundleContext.getBundles()) {
-/*
-            if (bundle.getSymbolicName().contains("yang")) {
-                try {
-                    bundle.stop();
-                } catch (BundleException e) {
-                    logger.error("Exception in Bundle uninstall "+bundle.getSymbolicName(), e);
-                }
-            }
-*/
-            if (bundle.getSymbolicName().contains("simpleforwarding")) {
-                try {
-                    bundle.stop();
-                } catch (BundleException e) {
-                    logger.error("Exception in Bundle uninstall "+bundle.getSymbolicName(), e);
-                }
-            }
-        }
     }
 
     /**
@@ -115,6 +102,19 @@ public class TutorialL2Forwarding implements IListenDataPacket {
      */
     void start() {
         logger.info("Started");
+
+        // Disabling the SimpleForwarding and ARPHandler bundle to not conflict with this one
+        BundleContext bundleContext = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
+        for(Bundle bundle : bundleContext.getBundles()) {
+            if (bundle.getSymbolicName().contains("arphandler") ||
+                bundle.getSymbolicName().contains("simpleforwarding")) {
+                try {
+                    bundle.stop();
+                } catch (BundleException e) {
+                    logger.error("Exception in Bundle uninstall "+bundle.getSymbolicName(), e);
+                }
+            }
+        }
     }
 
     /**
@@ -130,6 +130,7 @@ public class TutorialL2Forwarding implements IListenDataPacket {
         NodeConnector incoming_connector = inPkt.getIncomingNodeConnector();
         Node incoming_node = incoming_connector.getNode();
 
+        // Get ports on the switch where the packet arrived
         Set<NodeConnector> nodeConnectors = this.switchManager
                 .getUpNodeConnectors(incoming_node);
 
@@ -204,8 +205,10 @@ public class TutorialL2Forwarding implements IListenDataPacket {
                 // }
                 // logger.info("Installed flow {} in node {}", f,
                 // incoming_node);
-            } else
+            } else {
                 floodPacket(inPkt);
+                return PacketResult.CONSUME;
+            }
         }
         return PacketResult.IGNORED;
     }
