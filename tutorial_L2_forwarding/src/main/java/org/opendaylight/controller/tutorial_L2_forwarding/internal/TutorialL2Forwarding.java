@@ -86,6 +86,19 @@ public class TutorialL2Forwarding implements IListenDataPacket {
      * */
     void init() {
         logger.info("Initialized");
+
+        // Disabling the SimpleForwarding and ARPHandler bundle to not conflict with this one
+        BundleContext bundleContext = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
+        for(Bundle bundle : bundleContext.getBundles()) {
+            if (bundle.getSymbolicName().contains("arphandler") ||
+                bundle.getSymbolicName().contains("simpleforwarding")) {
+                try {
+                    bundle.uninstall();
+                } catch (BundleException e) {
+                    logger.error("Exception in Bundle uninstall "+bundle.getSymbolicName(), e);
+                }
+            }
+        }
     }
 
     /**
@@ -102,19 +115,6 @@ public class TutorialL2Forwarding implements IListenDataPacket {
      */
     void start() {
         logger.info("Started");
-
-        // Disabling the SimpleForwarding and ARPHandler bundle to not conflict with this one
-        BundleContext bundleContext = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
-        for(Bundle bundle : bundleContext.getBundles()) {
-            if (bundle.getSymbolicName().contains("arphandler") ||
-                bundle.getSymbolicName().contains("simpleforwarding")) {
-                try {
-                    bundle.stop();
-                } catch (BundleException e) {
-                    logger.error("Exception in Bundle uninstall "+bundle.getSymbolicName(), e);
-                }
-            }
-        }
     }
 
     /**
