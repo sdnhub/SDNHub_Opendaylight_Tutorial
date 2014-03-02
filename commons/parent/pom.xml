@@ -20,6 +20,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version.source>1.7</java.version.source>
     <java.version.target>1.7</java.version.target>
+    <checkstyle.skip>true</checkstyle.skip>
   </properties>
 
   <build>
