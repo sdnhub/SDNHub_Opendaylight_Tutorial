@@ -59,6 +59,10 @@ import org.opendaylight.controller.sal.utils.Status;
 import org.opendaylight.controller.sal.utils.NetUtils;
 import org.opendaylight.controller.switchmanager.ISwitchManager;
 import org.opendaylight.controller.switchmanager.Subnet;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleException;
+import org.osgi.framework.FrameworkUtil;
 
 public class TutorialL2Forwarding implements IListenDataPacket {
     private static final Logger logger = LoggerFactory
@@ -109,6 +113,19 @@ public class TutorialL2Forwarding implements IListenDataPacket {
      */
     void init() {
         logger.info("Initialized");
+        // Disabling the SimpleForwarding and ARPHandler bundle to not conflict with this one
+        BundleContext bundleContext = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
+        for(Bundle bundle : bundleContext.getBundles()) {
+            if (bundle.getSymbolicName().contains("arphandler") ||
+                bundle.getSymbolicName().contains("simpleforwarding")) {
+                try {
+                    bundle.uninstall();
+                } catch (BundleException e) {
+                    logger.error("Exception in Bundle uninstall "+bundle.getSymbolicName(), e); 
+                }   
+            }   
+        }   
+ 
     }
 
     /**

@@ -36,7 +36,6 @@
               org.opendaylight.controller.sal.action,
               org.opendaylight.controller.sal.flowprogrammer,
               org.opendaylight.controller.switchmanager,
-              org.opendaylight.controller.arphandler,
               org.apache.felix.dm,
               org.osgi.service.component,
               org.slf4j,
@@ -60,10 +59,6 @@
       <groupId>org.opendaylight.controller</groupId>
       <artifactId>switchmanager</artifactId>
       <version>0.5.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.opendaylight.controller</groupId>
-      <artifactId>arphandler</artifactId>
     </dependency>
     <dependency>
       <groupId>org.opendaylight.controller</groupId>
