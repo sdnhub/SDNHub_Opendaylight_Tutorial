@@ -42,6 +42,7 @@ import org.opendaylight.controller.sal.flowprogrammer.Flow;
 import org.opendaylight.controller.sal.packet.ARP;
 import org.opendaylight.controller.sal.packet.BitBufferHelper;
 import org.opendaylight.controller.sal.packet.Ethernet;
+import org.opendaylight.controller.sal.packet.ICMP;
 import org.opendaylight.controller.sal.packet.IDataPacketService;
 import org.opendaylight.controller.sal.packet.IListenDataPacket;
 import org.opendaylight.controller.sal.packet.Packet;
@@ -159,63 +160,77 @@ public class TutorialL2Forwarding implements IListenDataPacket {
         }
     }
 
+
+
     @Override
     public PacketResult receiveDataPacket(RawPacket inPkt) {
         if (inPkt == null) {
             return PacketResult.IGNORED;
         }
-        logger.trace("Received a frame of size: {}",
-                        inPkt.getPacketData().length);
 
-        Packet formattedPak = this.dataPacketService.decodeDataPacket(inPkt);
         NodeConnector incoming_connector = inPkt.getIncomingNodeConnector();
-        Node incoming_node = incoming_connector.getNode();
 
-        if (formattedPak instanceof Ethernet) {
-            byte[] srcMAC = ((Ethernet)formattedPak).getSourceMACAddress();
-            byte[] dstMAC = ((Ethernet)formattedPak).getDestinationMACAddress();
-
-            // Hub implementation
-            if (function.equals("hub")) {
-                floodPacket(inPkt);
-                return PacketResult.CONSUME;
+        // Hub implementation
+        if (function.equals("hub")) {
+            floodPacket(inPkt);
+        } else {
+            Packet formattedPak = this.dataPacketService.decodeDataPacket(inPkt);
+            if (!(formattedPak instanceof Ethernet)) {
+                return PacketResult.IGNORED;
             }
-            
-            // Switch
-            else {
-                long srcMAC_val = BitBufferHelper.toNumber(srcMAC);
-                long dstMAC_val = BitBufferHelper.toNumber(dstMAC);
 
-                this.mac_to_port.put(srcMAC_val, incoming_connector);
-
-                Match match = new Match();
-                match.setField( new MatchField(MatchType.IN_PORT, incoming_connector) );
-                match.setField( new MatchField(MatchType.DL_DST, dstMAC.clone()) );
-
-                NodeConnector dst_connector;
-
-                // Do I know the destination MAC?
-                if ((dst_connector = this.mac_to_port.get(dstMAC_val)) != null) {
-                    List<Action> actions = new ArrayList<Action>();
-                    actions.add(new Output(dst_connector));
-
-                    Flow f = new Flow(match, actions);
-
-                    // Modify the flow on the network node
-                    Status status = programmer.addFlow(incoming_node, f);
-                    if (!status.isSuccess()) {
-                        logger.warn(
-                                "SDN Plugin failed to program the flow: {}. The failure is: {}",
-                                f, status.getDescription());
-                        return PacketResult.IGNORED;
-                    }
-                    logger.info("Installed flow {} in node {}",
-                            f, incoming_node);
+            learnSourceMAC(formattedPak, incoming_connector);
+            NodeConnector outgoing_connector = 
+                knowDestinationMAC(formattedPak);
+            if (outgoing_connector == null) {
+                floodPacket(inPkt);
+            } else {
+                if (!programFlow(formattedPak, incoming_connector,
+                            outgoing_connector)) {
+                    return PacketResult.IGNORED;
                 }
-                else
-                    floodPacket(inPkt);
             }
         }
-        return PacketResult.IGNORED;
+        return PacketResult.CONSUME;
+    }
+
+    private void learnSourceMAC(Packet formattedPak, NodeConnector incoming_connector) {
+        byte[] srcMAC = ((Ethernet)formattedPak).getSourceMACAddress();
+        long srcMAC_val = BitBufferHelper.toNumber(srcMAC);
+        this.mac_to_port.put(srcMAC_val, incoming_connector);
+    }
+
+    private NodeConnector knowDestinationMAC(Packet formattedPak) {
+        byte[] dstMAC = ((Ethernet)formattedPak).getDestinationMACAddress();
+        long dstMAC_val = BitBufferHelper.toNumber(dstMAC);
+        return this.mac_to_port.get(dstMAC_val) ;
+    }
+
+    private boolean programFlow(Packet formattedPak, 
+            NodeConnector incoming_connector, 
+            NodeConnector outgoing_connector) {
+        byte[] dstMAC = ((Ethernet)formattedPak).getDestinationMACAddress();
+
+        Match match = new Match();
+        match.setField( new MatchField(MatchType.IN_PORT, incoming_connector) );
+        match.setField( new MatchField(MatchType.DL_DST, dstMAC.clone()) );
+
+        List<Action> actions = new ArrayList<Action>();
+        actions.add(new Output(outgoing_connector));
+
+        Flow f = new Flow(match, actions);
+        f.setIdleTimeout((short)5);
+
+        // Modify the flow on the network node
+        Node incoming_node = incoming_connector.getNode();
+        Status status = programmer.addFlow(incoming_node, f);
+
+        if (!status.isSuccess()) {
+            logger.warn("SDN Plugin failed to program the flow: {}. The failure is: {}",
+                    f, status.getDescription());
+            return false;
+        } else {
+            return true;
+        }
     }
 }
