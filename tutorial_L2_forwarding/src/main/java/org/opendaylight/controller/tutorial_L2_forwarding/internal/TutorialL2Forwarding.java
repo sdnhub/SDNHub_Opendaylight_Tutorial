@@ -71,7 +71,7 @@ public class TutorialL2Forwarding implements IListenDataPacket {
     private IFlowProgrammerService programmer = null;
     private IDataPacketService dataPacketService = null;
     private Map<Long, NodeConnector> mac_to_port = new HashMap<Long, NodeConnector>();
-    private String function = "switch";
+    private String function = "hub";
 
     void setDataPacketService(IDataPacketService s) {
         this.dataPacketService = s;
