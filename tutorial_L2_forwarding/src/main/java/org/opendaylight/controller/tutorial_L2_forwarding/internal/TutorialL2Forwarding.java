@@ -206,6 +206,8 @@ public class TutorialL2Forwarding implements IListenDataPacket {
                             outgoing_connector)) {
                     return PacketResult.IGNORED;
                 }
+                inPkt.setOutgoingNodeConnector(outgoing_connector);
+                this.dataPacketService.transmitDataPacket(inPkt);
             }
         }
         return PacketResult.CONSUME;
