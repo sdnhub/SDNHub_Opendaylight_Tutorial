@@ -55,6 +55,24 @@
     </plugins>
   </build>
   <dependencies>
+      <!-- south bound plugins -->
+      <dependency>
+          <groupId>org.sdnhub.odl</groupId>
+          <artifactId>ofbroker</artifactId>
+          <version>0.1.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+          <groupId>org.sdnhub.odl</groupId>
+          <artifactId>protocol_plugins.openflow13</artifactId>
+          <version>0.1.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+          <groupId>org.sdnhub.odl</groupId>
+          <artifactId>protocol_plugins.openflow10</artifactId>
+          <version>0.1.0-SNAPSHOT</version>
+      </dependency>
+
+      <!-- other modules -->
     <dependency>
       <groupId>org.opendaylight.controller</groupId>
       <artifactId>switchmanager</artifactId>

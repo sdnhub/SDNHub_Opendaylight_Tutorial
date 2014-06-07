@@ -12,15 +12,17 @@
   </parent>
   <groupId>org.sdnhub.tutorial_L2_forwarding</groupId>
   <artifactId>commons.tutorial_L2_forwarding</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>0.5.0-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <url>https://wiki.opendaylight.org/view/OVSDB_Integration:Main</url>
+  <url>http://sdnhub.org/tutorials/opendaylight</url>
   <properties>
+    <sdnhubnexus>http://repo.sdnhub.org:8080/nexus/content</sdnhubnexus>
     <nexusproxy>http://nexus.opendaylight.org/content</nexusproxy>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version.source>1.7</java.version.source>
     <java.version.target>1.7</java.version.target>
     <checkstyle.skip>true</checkstyle.skip>
+    <spring.current.version>4.0.2.RELEASE</spring.current.version>
   </properties>
 
   <build>
@@ -54,6 +56,18 @@
       <url>http://nexus.opendaylight.org/content/repositories/jsonrpc4j-webdav-maven-repo/</url>
     </repository>
 -->
+    <!-- SDNHub Public Repo group -->
+    <repository>
+      <id>sdnhub-nexus</id>
+      <name>sdnhub</name>
+      <url>${sdnhubnexus}/groups/public</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
     <!-- OpenDayLight Released artifact -->
     <repository>
       <id>opendaylight-release</id>
