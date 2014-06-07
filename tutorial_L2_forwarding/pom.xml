@@ -47,7 +47,7 @@
               org.opendaylight.controller.tutorial_L2_forwarding
             </Export-Package>
             <Bundle-Activator>
-              org.sdnhub.odl.tutorial_L2_forwarding.internal.Activator
+              org.opendaylight.controller.tutorial_L2_forwarding.internal.Activator
             </Bundle-Activator>
           </instructions>
           <manifestLocation>${project.basedir}/META-INF</manifestLocation>
