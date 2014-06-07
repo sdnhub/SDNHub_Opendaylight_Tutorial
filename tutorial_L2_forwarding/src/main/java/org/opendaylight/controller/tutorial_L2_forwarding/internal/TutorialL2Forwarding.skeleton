@@ -116,8 +116,7 @@ public class TutorialL2Forwarding implements IListenDataPacket {
         // Disabling the SimpleForwarding and ARPHandler bundle to not conflict with this one
         BundleContext bundleContext = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
         for(Bundle bundle : bundleContext.getBundles()) {
-            if (bundle.getSymbolicName().contains("arphandler") ||
-                bundle.getSymbolicName().contains("simpleforwarding")) {
+            if (bundle.getSymbolicName().contains("simpleforwarding")) {
                 try {
                     bundle.uninstall();
                 } catch (BundleException e) {
