@@ -8,12 +8,13 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.sdnhub.tutorial_L2_forwarding</groupId>
+    <groupId>org.sdnhub.odl</groupId>
     <artifactId>commons.tutorial_L2_forwarding</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>../../commons/parent/</relativePath>
   </parent>
 
+  <groupId>org.sdnhub.odl</groupId>
   <artifactId>distribution.tutorial_L2_forwarding</artifactId>
   <packaging>pom</packaging>
   <name>L2 forwarding tutorial Distribution</name>
@@ -21,8 +22,8 @@ http://maven.apache.org/maven-v4_0_0.xsd">
   <dependencies>
     <!-- SDNHub tutorial -->
     <dependency>
-      <groupId>org.sdnhub.tutorial_L2_forwarding</groupId>
-      <artifactId>sdnhub.tutorial_L2_forwarding</artifactId>
+      <groupId>org.sdnhub.odl</groupId>
+      <artifactId>tutorial_L2_forwarding</artifactId>
       <version>0.5.0-SNAPSHOT</version>
     </dependency>
 
@@ -215,10 +216,6 @@ http://maven.apache.org/maven-v4_0_0.xsd">
       <groupId>org.opendaylight.controller</groupId>
       <artifactId>sal.networkconfiguration.implementation</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.opendaylight.ovsdb</groupId>
-      <artifactId>ovsdb</artifactId>
-    </dependency>
 
     <!-- ODL Northbound -->
     <dependency>
@@ -324,23 +321,24 @@ http://maven.apache.org/maven-v4_0_0.xsd">
     <dependency>
       <groupId>org.apache.felix</groupId>
       <artifactId>org.apache.felix.gogo.command</artifactId>
-    </dependency>
-    <dependency>
+      <version>0.8.0</version>
+   </dependency>
+   <dependency>
       <groupId>equinoxSDK381</groupId>
       <artifactId>org.apache.felix.gogo.runtime</artifactId>
-    </dependency>
-    <dependency>
+   </dependency>
+   <dependency>
       <groupId>equinoxSDK381</groupId>
       <artifactId>org.apache.felix.gogo.shell</artifactId>
-    </dependency>
-    <dependency>
+   </dependency>
+   <dependency>
       <groupId>org.apache.felix</groupId>
       <artifactId>org.apache.felix.dependencymanager</artifactId>
-    </dependency>
-    <dependency>
+   </dependency>
+   <dependency>
       <groupId>org.apache.felix</groupId>
       <artifactId>org.apache.felix.dependencymanager.shell</artifactId>
-    </dependency>
+   </dependency>
     <dependency>
       <groupId>equinoxSDK381</groupId>
       <artifactId>org.eclipse.equinox.console</artifactId>
@@ -378,14 +376,17 @@ http://maven.apache.org/maven-v4_0_0.xsd">
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
+      <version>${spring.current.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-web</artifactId>
+      <version>${spring.current.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-websocket</artifactId>
+      <version>${spring.current.version}</version>
    </dependency>
    <dependency>
       <groupId>org.springframework</groupId>
