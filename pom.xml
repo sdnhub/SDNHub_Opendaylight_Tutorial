@@ -2,18 +2,24 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-  <prerequisites>
-    <maven>3.0</maven>
-  </prerequisites>
 
-  <groupId>org.sdnhub.tutorial_L2_forwarding</groupId>
-  <artifactId>tutorial_L2_forwarding.project</artifactId>
-  <version>0.5.0-SNAPSHOT</version>
+  <parent>
+    <groupId>org.sdnhub.odl.tutorial</groupId>
+    <artifactId>commons</artifactId>
+    <version>1.1.0-SNAPSHOT</version>
+    <relativePath>commons/parent</relativePath>
+  </parent>
+
+  <artifactId>tutorial</artifactId>
+  <version>0.6.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <url>http://sdnhub.org/tutorials/opendaylight</url>
   <modules>
-    <module>tutorial_L2_forwarding</module>
-    <module>distribution/opendaylight</module>
+    <module>commons/parent</module>
+    <module>adsal_L2_forwarding</module>
+    <module>mdsal_L2_forwarding</module>
+    <module>distribution/opendaylight-osgi-adsal</module>
+    <module>distribution/opendaylight-osgi-mdsal</module>
   </modules>
 
 </project>

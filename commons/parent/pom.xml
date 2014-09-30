@@ -6,14 +6,16 @@
     <maven>3.0</maven>
   </prerequisites>
   <parent>
-    <groupId>org.opendaylight.controller</groupId>
-    <artifactId>commons.opendaylight</artifactId>
-    <version>1.4.1</version>
+    <groupId>org.opendaylight.odlparent</groupId>
+    <artifactId>odlparent</artifactId>
+    <version>1.4.2-SNAPSHOT</version>
+    <relativePath></relativePath>
   </parent>
 
-  <groupId>org.sdnhub.odl</groupId>
-  <artifactId>commons.tutorial_L2_forwarding</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <groupId>org.sdnhub.odl.tutorial</groupId>
+  <artifactId>commons</artifactId>
+  <name>SDN Hub OpenDaylight tutorial POM</name>
+  <version>1.1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <url>http://sdnhub.org/tutorials/opendaylight</url>
 
@@ -24,7 +26,82 @@
     <java.version.source>1.7</java.version.source>
     <java.version.target>1.7</java.version.target>
     <checkstyle.skip>true</checkstyle.skip>
+    <skip.distribution>false</skip.distribution>
     <spring.current.version>4.0.2.RELEASE</spring.current.version>
+    <sdnhub.of_plugins.version>0.1.0-SNAPSHOT</sdnhub.of_plugins.version>
+    <!-- ODL Controller Dependency Versions -->
+    <appauth.version>0.4.2-SNAPSHOT</appauth.version>
+    <arphandler.version>0.5.2-SNAPSHOT</arphandler.version>
+    <bundlescanner.implementation.version>0.4.2-SNAPSHOT</bundlescanner.implementation.version>
+    <bundlescanner.version>0.4.2-SNAPSHOT</bundlescanner.version>
+    <clustering.services.version>0.5.1-SNAPSHOT</clustering.services.version>
+    <clustering.services_implementation.version>0.4.3-SNAPSHOT</clustering.services_implementation.version>
+    <commons.httpclient.version>0.1.2-SNAPSHOT</commons.httpclient.version>
+    <configuration.implementation.version>0.4.3-SNAPSHOT</configuration.implementation.version>
+    <configuration.version>0.4.3-SNAPSHOT</configuration.version>
+    <connectionmanager.version>0.1.2-SNAPSHOT</connectionmanager.version>
+    <connectionmanager.northbound.version>0.1.2-SNAPSHOT</connectionmanager.northbound.version>
+    <containermanager.version>0.5.2-SNAPSHOT</containermanager.version>
+    <containermanager.implementation.version>0.5.2-SNAPSHOT</containermanager.implementation.version>
+    <containermanager.northbound.version>0.4.2-SNAPSHOT</containermanager.northbound.version>
+    <controllermanager.northbound.version>0.0.2-SNAPSHOT</controllermanager.northbound.version>
+    <devices.web.version>0.4.2-SNAPSHOT</devices.web.version>
+    <flows.web.version>0.4.2-SNAPSHOT</flows.web.version>
+    <flowprogrammer.northbound.version>0.4.2-SNAPSHOT</flowprogrammer.northbound.version>
+    <forwarding.staticrouting>0.5.2-SNAPSHOT</forwarding.staticrouting>
+    <forwarding.staticrouting.northbound.version>0.4.2-SNAPSHOT</forwarding.staticrouting.northbound.version>
+    <forwardingrulesmanager.version>0.6.0-SNAPSHOT</forwardingrulesmanager.version>
+    <forwardingrulesmanager.implementation.version>0.4.2-SNAPSHOT</forwardingrulesmanager.implementation.version>
+    <hosttracker.api.version>0.5.2-SNAPSHOT</hosttracker.api.version>
+    <hosttracker.implementation.version>0.5.2-SNAPSHOT</hosttracker.implementation.version>
+    <hosttracker.northbound.version>0.4.2-SNAPSHOT</hosttracker.northbound.version>
+    <logging.bridge.version>0.4.2-SNAPSHOT</logging.bridge.version>
+    <protocol_plugins.stub.version>0.4.2-SNAPSHOT</protocol_plugins.stub.version>
+    <routing.dijkstra_implementation.version>0.4.2-SNAPSHOT</routing.dijkstra_implementation.version>
+    <sal.version>0.8.1-SNAPSHOT</sal.version>
+    <sal.implementation.version>0.4.2-SNAPSHOT</sal.implementation.version>
+    <sal.connection.version>0.1.2-SNAPSHOT</sal.connection.version>
+    <sal.networkconfiguration.version>0.0.3-SNAPSHOT</sal.networkconfiguration.version>
+    <security.version>0.4.2-SNAPSHOT</security.version>
+    <statistics.northbound.version>0.4.2-SNAPSHOT</statistics.northbound.version>
+    <statisticsmanager.implementation.version>0.4.2-SNAPSHOT</statisticsmanager.implementation.version>
+    <statisticsmanager.version>0.5.1-SNAPSHOT</statisticsmanager.version>
+    <subnets.northbound.version>0.4.2-SNAPSHOT</subnets.northbound.version>
+    <switchmanager.api.version>0.7.1-SNAPSHOT</switchmanager.api.version>
+    <switchmanager.implementation.version>0.4.2-SNAPSHOT</switchmanager.implementation.version>
+    <switchmanager.northbound.version>0.4.2-SNAPSHOT</switchmanager.northbound.version>
+    <topology.northbound.version>0.4.2-SNAPSHOT</topology.northbound.version>
+    <topologymanager.version>0.4.2-SNAPSHOT</topologymanager.version>
+    <topology.web.version>0.4.2-SNAPSHOT</topology.web.version>
+    <troubleshoot.web.version>0.4.2-SNAPSHOT</troubleshoot.web.version>
+    <usermanager.implementation.version>0.4.2-SNAPSHOT</usermanager.implementation.version>
+    <usermanager.northbound.version>0.0.2-SNAPSHOT</usermanager.northbound.version>
+    <usermanager.version>0.4.2-SNAPSHOT</usermanager.version>
+    <web.version>0.4.2-SNAPSHOT</web.version>
+
+    <mdsal.version>1.1-SNAPSHOT</mdsal.version>
+    <openflowj.version>1.0.2</openflowj.version>
+    <protocol_plugins.openflow.version>0.4.2-SNAPSHOT</protocol_plugins.openflow.version>
+    <openflowplugin.version>0.0.3-SNAPSHOT</openflowplugin.version>
+    <openflowplugin-nicira.version>0.0.3-SNAPSHOT</openflowplugin-nicira.version>
+    <openflowplugin-extension.version>0.0.3-SNAPSHOT</openflowplugin-extension.version>
+    <openflowjava-nicira.version>0.0.3-SNAPSHOT</openflowjava-nicira.version>
+    <openflowjava-extension.version>0.0.3-SNAPSHOT</openflowjava-extension.version>
+    <openflowjava.version>0.5-SNAPSHOT</openflowjava.version>
+    <controller.model.version>1.1-SNAPSHOT</controller.model.version>
+    <yang.binding.version>0.6.2-SNAPSHOT</yang.binding.version>
+    <controller.config.version>0.2.5-SNAPSHOT</controller.config.version>
+    <northbound.commons.version>0.4.2-SNAPSHOT</northbound.commons.version>
+    <!-- 3rd Pary Dependency Versions -->
+    <sf.net.jung2.version>2.0.1</sf.net.jung2.version>
+    <commons.collection.version>1.0</commons.collection.version>
+    <portlet.version>2.0</portlet.version>
+    <httpcomponents.version>4.2.1</httpcomponents.version>
+    <karaf.shell.version>3.0.0</karaf.shell.version>
+    <odl.karaf.base.version>1.4.2-SNAPSHOT</odl.karaf.base.version>
+    <nsf.version>0.4.2-SNAPSHOT</nsf.version>
+    <sfc-model.version>0.0.1-SNAPSHOT</sfc-model.version>
+    <netty.version>4.0.2.Final</netty.version>
   </properties>
 
   <build>
@@ -44,25 +121,36 @@
     </pluginManagement>
   </build>
 
-  <!-- modules should go once the jenkins job is updated to use the root pom -->
-  <modules>
-    <module>../../tutorial_L2_forwarding/</module>
-    <module>../../distribution/opendaylight</module>
-  </modules>
   <repositories>
-    <!-- jsonrpc4j mirror -->
-<!--
+    <!-- OpenDayLight Released artifact -->
     <repository>
-      <id>jsonrpc4j-webdav-maven-repo</id>
-      <name>jsonrpc4j maven repository</name>
-      <url>http://nexus.opendaylight.org/content/repositories/jsonrpc4j-webdav-maven-repo/</url>
+      <id>opendaylight-release</id>
+      <name>opendaylight-release</name>
+      <url>http://nexus.opendaylight.org/content/repositories/opendaylight.release/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
     </repository>
--->
+    <!-- OpenDayLight Snapshot artifact -->
+    <repository>
+      <id>opendaylight-snapshot</id>
+      <name>opendaylight-snapshot</name>
+      <url>http://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
     <!-- SDNHub Public Repo group -->
     <repository>
       <id>sdnhub-nexus</id>
       <name>sdnhub</name>
-      <url>${sdnhubnexus}/groups/public</url>
+      <url>http://repo.sdnhub.org:8080/nexus/content/groups/public</url>
       <releases>
         <enabled>true</enabled>
       </releases>
@@ -70,30 +158,106 @@
         <enabled>true</enabled>
       </snapshots>
     </repository>
-    <!-- OpenDayLight Released artifact -->
-    <repository>
-      <id>opendaylight-release</id>
-      <name>opendaylight-release</name>
-      <url>http://nexus.opendaylight.org/content/repositories/opendaylight.release/</url>
-    </repository>
-    <!-- OpenDayLight Snapshot artifact -->
-    <repository>
-      <id>opendaylight-snapshot</id>
-      <name>opendaylight-snapshot</name>
-      <url>http://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/</url>
-    </repository>
   </repositories>
 
   <pluginRepositories>
     <pluginRepository>
-      <id>central2</id>
-      <name>central2</name>
-      <url>http://nexus.opendaylight.org/content/repositories/central2/</url>
+      <id>opendaylight-release</id>
+      <name>opendaylight-release</name>
+      <url>http://nexus.opendaylight.org/content/repositories/opendaylight.release/</url>
+      <snapshots>
+          <enabled>false</enabled>
+      </snapshots>
+      <releases>
+          <enabled>true</enabled>
+      </releases>
     </pluginRepository>
     <pluginRepository>
       <id>opendaylight-snapshot</id>
-      <name>central2</name>
+      <name>opendaylight-snapshot</name>
       <url>http://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/</url>
-    </pluginRepository>
+      <snapshots>
+          <enabled>true</enabled>
+      </snapshots>
+      <releases>
+          <enabled>false</enabled>
+      </releases>
+  </pluginRepository>
   </pluginRepositories>
+
+  <dependencies>
+    <!-- SDNHub common artifacts -->
+    <dependency>
+       <groupId>org.sdnhub.odl</groupId>
+       <artifactId>web.brandfragment</artifactId>
+       <version>0.1.0-SNAPSHOT</version>
+    </dependency>
+    <!-- Other common bundles -->
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-core</artifactId>
+    </dependency>
+      <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.dependencymanager</artifactId>
+      </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-annotations</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>equinoxSDK381</groupId>
+      <artifactId>org.eclipse.osgi</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-all</artifactId>
+      <version>${netty.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-collections</groupId>
+      <artifactId>commons-collections</artifactId>
+      <version>${commons.collection.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.portlet</groupId>
+      <artifactId>portlet-api</artifactId>
+      <version>${portlet.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpcore-nio</artifactId>
+      <version>${httpcomponents.version}</version>
+    </dependency>
+  </dependencies>
 </project>

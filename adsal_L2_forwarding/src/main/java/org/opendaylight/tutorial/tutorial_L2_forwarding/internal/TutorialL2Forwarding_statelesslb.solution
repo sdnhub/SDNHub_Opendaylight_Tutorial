@@ -1,0 +1,366 @@
+/*
+ * Copyright (C) 2014 SDN Hub
+
+ Licensed under the GNU GENERAL PUBLIC LICENSE, Version 3.
+ You may not use this file except in compliance with this License.
+ You may obtain a copy of the License at
+
+    http://www.gnu.org/licenses/gpl-3.0.txt
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+ implied.
+
+ *
+ */
+
+package org.opendaylight.tutorial.tutorial_L2_forwarding.internal;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import java.lang.String;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleException;
+import org.osgi.framework.FrameworkUtil;
+import org.opendaylight.controller.sal.core.ConstructionException;
+import org.opendaylight.controller.sal.core.Node;
+import org.opendaylight.controller.sal.core.NodeConnector;
+import org.opendaylight.controller.sal.flowprogrammer.IFlowProgrammerService;
+import org.opendaylight.controller.sal.flowprogrammer.Flow;
+import org.opendaylight.controller.sal.packet.ARP;
+import org.opendaylight.controller.sal.packet.BitBufferHelper;
+import org.opendaylight.controller.sal.packet.Ethernet;
+import org.opendaylight.controller.sal.packet.IDataPacketService;
+import org.opendaylight.controller.sal.packet.IListenDataPacket;
+import org.opendaylight.controller.sal.packet.IPv4;
+import org.opendaylight.controller.sal.packet.TCP;
+import org.opendaylight.controller.sal.packet.Packet;
+import org.opendaylight.controller.sal.packet.PacketResult;
+import org.opendaylight.controller.sal.packet.RawPacket;
+import org.opendaylight.controller.sal.action.Action;
+import org.opendaylight.controller.sal.action.Output;
+import org.opendaylight.controller.sal.action.SetDlDst;
+import org.opendaylight.controller.sal.action.SetDlSrc;
+import org.opendaylight.controller.sal.action.SetNwDst;
+import org.opendaylight.controller.sal.action.SetNwSrc;
+import org.opendaylight.controller.sal.action.Flood;
+import org.opendaylight.controller.sal.match.Match;
+import org.opendaylight.controller.sal.match.MatchType;
+import org.opendaylight.controller.sal.match.MatchField;
+import org.opendaylight.controller.sal.utils.EtherTypes;
+import org.opendaylight.controller.sal.utils.IPProtocols;
+import org.opendaylight.controller.sal.utils.Status;
+import org.opendaylight.controller.sal.utils.NetUtils;
+import org.opendaylight.controller.switchmanager.ISwitchManager;
+import org.opendaylight.controller.switchmanager.Subnet;
+
+/* Class used for tutorial purposes. The bundle will perform
+   L2 learning switch, as well as the stateless load-balancer.
+   Hardcoded values for the stateless LB is set in init().
+   All other intelligence is in the receiveDataPacket() method.
+   */
+
+public class TutorialL2Forwarding implements IListenDataPacket {
+    private static final Logger logger = LoggerFactory
+            .getLogger(TutorialL2Forwarding.class);
+    private ISwitchManager switchManager = null;
+    private IFlowProgrammerService programmer = null;
+    private IDataPacketService dataPacketService = null;
+    private Map<Long, NodeConnector> mac_to_port = new HashMap<Long, NodeConnector>();
+    private String function = "switch";
+
+    public class ServerInfo {
+        public InetAddress ip;
+        public Long mac;
+
+        public ServerInfo(InetAddress ip, Long mac) {
+            this.ip = ip;
+            this.mac = mac;
+        }
+    }
+
+    //TODO: Stop keeping it hardcoded and allow used to enter through REST
+    InetAddress virtual_ip;
+    Long virtual_mac;
+
+    List<ServerInfo> server = new ArrayList<ServerInfo>();
+    int total_servers = 0;
+    int server_index = 0;
+
+    void setDataPacketService(IDataPacketService s) {
+        this.dataPacketService = s;
+    }
+
+    void unsetDataPacketService(IDataPacketService s) {
+        if (this.dataPacketService == s) {
+            this.dataPacketService = null;
+        }
+    }
+
+    public void setFlowProgrammerService(IFlowProgrammerService s)
+    {
+        this.programmer = s;
+    }
+
+    public void unsetFlowProgrammerService(IFlowProgrammerService s) {
+        if (this.programmer == s) {
+            this.programmer = null;
+        }
+    }
+
+    void setSwitchManager(ISwitchManager s) {
+        logger.debug("SwitchManager set");
+        this.switchManager = s;
+    }
+
+    void unsetSwitchManager(ISwitchManager s) {
+        if (this.switchManager == s) {
+            logger.debug("SwitchManager removed!");
+            this.switchManager = null;
+        }
+    }
+
+    /**
+     * Function called by the dependency manager when all the required
+     * dependencies are satisfied
+     *
+     */
+    void init() {
+        try {
+            this.virtual_ip = InetAddress.getByName("10.0.0.5");
+            this.virtual_mac = 5L;
+
+            this.server.add(new ServerInfo(InetAddress.getByName("10.0.0.2"), 2L));
+            this.server.add(new ServerInfo(InetAddress.getByName("10.0.0.3"), 3L));
+            this.server.add(new ServerInfo(InetAddress.getByName("10.0.0.4"), 4L));
+            this.total_servers = this.server.size();
+        }
+        catch (UnknownHostException e) {
+            logger.error("Grave problem. Hardcoding of server IPs failed");
+        }
+        // Disabling the SimpleForwarding and ARPHandler bundle to not conflict with this one
+        BundleContext bundleContext = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
+        for(Bundle bundle : bundleContext.getBundles()) {
+            if (bundle.getSymbolicName().contains("simpleforwarding")) {
+                try {
+                    bundle.uninstall();
+                } catch (BundleException e) {
+                    logger.error("Exception in Bundle uninstall "+bundle.getSymbolicName(), e); 
+                }   
+            }   
+        }   
+ 
+        logger.info("Initialized");
+    }
+
+    /**
+     * Function called by the dependency manager when at least one
+     * dependency become unsatisfied or when the component is shutting
+     * down because for example bundle is being stopped.
+     *
+     */
+    void destroy() {
+    }
+
+    /**
+     * Function called by dependency manager after "init ()" is called
+     * and after the services provided by the class are registered in
+     * the service registry
+     *
+     */
+    void start() {
+        logger.info("Started");
+    }
+
+    /**
+     * Function called by the dependency manager before the services
+     * exported by the component are unregistered, this will be
+     * followed by a "destroy ()" calls
+     *
+     */
+    void stop() {
+        logger.info("Stopped");
+    }
+
+    private void floodPacket(RawPacket inPkt) {
+        NodeConnector incoming_connector = inPkt.getIncomingNodeConnector();
+        Node incoming_node = incoming_connector.getNode();
+
+        Set<NodeConnector> nodeConnectors =
+                this.switchManager.getUpNodeConnectors(incoming_node);
+
+        for (NodeConnector p : nodeConnectors) {
+            if (!p.equals(incoming_connector)) {
+                try {
+                    RawPacket destPkt = new RawPacket(inPkt);
+                    destPkt.setOutgoingNodeConnector(p);
+                    this.dataPacketService.transmitDataPacket(destPkt);
+                } catch (ConstructionException e2) {
+                    continue;
+                }
+            }
+        }
+    }
+
+    @Override
+    public PacketResult receiveDataPacket(RawPacket inPkt) {
+        if (inPkt == null) {
+            return PacketResult.IGNORED;
+        }
+        logger.trace("Received a frame of size: {}",
+                        inPkt.getPacketData().length);
+
+        Packet formattedPak = this.dataPacketService.decodeDataPacket(inPkt);
+        NodeConnector incoming_connector = inPkt.getIncomingNodeConnector();
+        Node incoming_node = incoming_connector.getNode();
+
+        if (formattedPak instanceof Ethernet) {
+            byte[] srcMAC = ((Ethernet)formattedPak).getSourceMACAddress();
+            byte[] dstMAC = ((Ethernet)formattedPak).getDestinationMACAddress();
+
+            Object nextPak = formattedPak.getPayload();
+            try {
+                if (nextPak instanceof IPv4) {
+                    InetAddress srcIP = InetAddress.getByAddress(NetUtils.intToByteArray4(((IPv4)nextPak).getSourceAddress()));
+                    InetAddress dstIP = InetAddress.getByAddress(NetUtils.intToByteArray4(((IPv4)nextPak).getDestinationAddress()));
+
+                    if (dstIP.equals(virtual_ip)) {
+                        nextPak = ((IPv4)nextPak).getPayload();
+                        if (nextPak instanceof TCP) {
+                            short srcPort = ((TCP)nextPak).getSourcePort();
+                            short dstPort = ((TCP)nextPak).getDestinationPort();
+
+                            // Select server
+                            int index = this.server_index % this.total_servers;
+                            InetAddress selected_server_ip =  this.server.get(index).ip;
+                            Long selected_server_mac = this.server.get(index).mac;
+                            NodeConnector selected_server_connector = this.mac_to_port.get(selected_server_mac);
+                            this.server_index += 1;
+
+                            // Send out the first packet to the selected server
+                            try {
+                                RawPacket destPkt = new RawPacket(inPkt);
+                                destPkt.setOutgoingNodeConnector(selected_server_connector);
+                                this.dataPacketService.transmitDataPacket(destPkt);
+                            } catch (ConstructionException e2) {
+                                logger.warn("Could not create packet for PACKET_OUT");
+                                return PacketResult.CONSUME;
+                            }
+
+                            // Setup match rules for forward direction
+                            // based on the stateless LB logic
+                            Match match = new Match();
+                            match.setField(MatchType.DL_TYPE, EtherTypes.IPv4.shortValue());
+                            match.setField(MatchType.NW_PROTO, IPProtocols.TCP.byteValue());
+                            match.setField(MatchType.DL_SRC, srcMAC);
+                            match.setField(MatchType.NW_SRC, srcIP);
+                            match.setField(MatchType.TP_SRC, srcPort);
+                            match.setField(MatchType.DL_DST, dstMAC);
+                            match.setField(MatchType.NW_DST, dstIP);
+                            match.setField(MatchType.TP_DST, dstPort);
+                            match.setField(MatchType.IN_PORT, incoming_connector);
+
+                            // 3 actions needed for the forward direction
+                            List<Action> actions = new ArrayList<Action>();
+                            actions.add(new SetDlDst(Arrays.copyOfRange(
+                                    BitBufferHelper.toByteArray(selected_server_mac),2,8)));
+                            actions.add(new SetNwDst(selected_server_ip));
+                            actions.add(new Output(selected_server_connector));
+
+                            Flow f = new Flow(match, actions);
+                            f.setIdleTimeout((short)10);
+
+                            // Modify the flow on the network node
+                            Status status = programmer.addFlow(incoming_node, f);
+                            if (!status.isSuccess()) {
+                                logger.warn("Forward direction: {}", status.getDescription());
+                                return PacketResult.CONSUME;
+                            }
+                            logger.info("Installed forward flow {} in node {}", f, incoming_node);
+
+                            //Setup rules in reverse direction
+                            Match reverse_match = match.reverse();
+                            reverse_match.setField(MatchType.DL_SRC, Arrays.copyOfRange(
+                                    BitBufferHelper.toByteArray(selected_server_mac),2,8));
+                            reverse_match.setField(MatchType.NW_SRC, selected_server_ip);
+                            reverse_match.setField(MatchType.IN_PORT, selected_server_connector);
+
+                            // 3 actions needed for the reverse direction
+                            List<Action> reverse_actions = new ArrayList<Action>();
+                            reverse_actions.add(new SetDlSrc(dstMAC));
+                            reverse_actions.add(new SetNwSrc(dstIP));
+                            reverse_actions.add(new Output(incoming_connector));
+
+                            Flow reverse_f = new Flow(reverse_match, reverse_actions);
+                            reverse_f.setIdleTimeout((short)10);
+
+                            // Modify the flow on the network node
+                            status = programmer.addFlow(incoming_node, reverse_f);
+                            if (!status.isSuccess()) {
+                                logger.warn("Reverse direction: {}", status.getDescription());
+                            }
+                            logger.info("Installed reverse flow {} in node {}", reverse_f, incoming_node);
+
+                            return PacketResult.CONSUME;
+                        }
+                    }
+                }
+            }
+            catch (UnknownHostException e1) {
+                return PacketResult.IGNORED;
+            }
+
+            // Switch implementation
+            long srcMAC_val = BitBufferHelper.toNumber(srcMAC);
+            long dstMAC_val = BitBufferHelper.toNumber(dstMAC);
+
+            this.mac_to_port.put(srcMAC_val, incoming_connector);
+
+            Match match = new Match();
+            match.setField(MatchType.IN_PORT, incoming_connector);
+            match.setField(MatchType.DL_DST, dstMAC.clone());
+
+            NodeConnector dst_connector;
+
+            // Do I know the destination MAC?
+            if ((dst_connector = this.mac_to_port.get(dstMAC_val)) != null) {
+                List<Action> actions = new ArrayList<Action>();
+                actions.add(new Output(dst_connector));
+
+                Flow f = new Flow(match, actions);
+                f.setIdleTimeout((short)10);
+
+                // Modify the flow on the network node
+                Status status = programmer.addFlow(incoming_node, f);
+                if (!status.isSuccess()) {
+                    logger.warn(
+                            "SDN Plugin failed to program the flow: {}. The failure is: {}",
+                            f, status.getDescription());
+                    return PacketResult.IGNORED;
+                }
+                logger.info("Installed flow {} in node {}",
+                        f, incoming_node);
+            }
+            else
+                floodPacket(inPkt);
+        }
+        return PacketResult.IGNORED;
+    }
+}

@@ -1,0 +1,214 @@
+/*
+ * Copyright (C) 2014 SDN Hub
+
+ Licensed under the GNU GENERAL PUBLIC LICENSE, Version 3.
+ You may not use this file except in compliance with this License.
+ You may obtain a copy of the License at
+
+    http://www.gnu.org/licenses/gpl-3.0.txt
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+ implied.
+
+ *
+ */
+
+package org.opendaylight.tutorial.tutorial_L2_forwarding.internal;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+import org.opendaylight.controller.sal.core.ConstructionException;
+import org.opendaylight.controller.sal.core.Node;
+import org.opendaylight.controller.sal.core.NodeConnector;
+import org.opendaylight.controller.sal.flowprogrammer.IFlowProgrammerService;
+import org.opendaylight.controller.sal.packet.Ethernet;
+import org.opendaylight.controller.sal.packet.IDataPacketService;
+import org.opendaylight.controller.sal.packet.IListenDataPacket;
+import org.opendaylight.controller.sal.packet.Packet;
+import org.opendaylight.controller.sal.packet.PacketResult;
+import org.opendaylight.controller.sal.packet.RawPacket;
+import org.opendaylight.controller.switchmanager.ISwitchManager;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleException;
+import org.osgi.framework.FrameworkUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class TutorialL2Forwarding implements IListenDataPacket {
+    private static final Logger logger = LoggerFactory
+            .getLogger(TutorialL2Forwarding.class);
+    private ISwitchManager switchManager = null;
+    private IFlowProgrammerService programmer = null;
+    private IDataPacketService dataPacketService = null;
+    private final Map<Long, NodeConnector> mac_to_port = new HashMap<Long, NodeConnector>();
+    private final String function = "hub";
+
+    void setDataPacketService(IDataPacketService s) {
+        this.dataPacketService = s;
+    }
+
+    void unsetDataPacketService(IDataPacketService s) {
+        if (this.dataPacketService == s) {
+            this.dataPacketService = null;
+        }
+    }
+
+    public void setFlowProgrammerService(IFlowProgrammerService s) {
+        this.programmer = s;
+    }
+
+    public void unsetFlowProgrammerService(IFlowProgrammerService s) {
+        if (this.programmer == s) {
+            this.programmer = null;
+        }
+    }
+
+    void setSwitchManager(ISwitchManager s) {
+        logger.debug("SwitchManager set");
+        this.switchManager = s;
+    }
+
+    void unsetSwitchManager(ISwitchManager s) {
+        if (this.switchManager == s) {
+            logger.debug("SwitchManager removed!");
+            this.switchManager = null;
+        }
+    }
+
+    /**
+     * Function called by the dependency manager when all the required
+     * dependencies are satisfied
+     * */
+    void init() {
+        logger.info("Initialized");
+
+        // Disabling the SimpleForwarding and ARPHandler bundle to not conflict with this one
+        BundleContext bundleContext = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
+        for(Bundle bundle : bundleContext.getBundles()) {
+            if (bundle.getSymbolicName().contains("simpleforwarding")) {
+                try {
+                    bundle.uninstall();
+                } catch (BundleException e) {
+                    logger.error("Exception in Bundle uninstall "+bundle.getSymbolicName(), e);
+                }
+            }
+        }
+    }
+
+    /**
+     * Function called by the dependency manager when at least one dependency
+     * become unsatisfied or when the component is shutting down because for
+     * example bundle is being stopped.
+     * */
+    void destroy() {
+    }
+
+    /**
+     * Function called by dependency manager after "init ()" is called and after
+     * the services provided by the class are registered in the service registry
+     */
+    void start() {
+        logger.info("Started");
+    }
+
+    /**
+     * Function called by the dependency manager before the services exported by
+     * the component are unregistered, this will be followed by a "destroy ()"
+     * calls
+     * */
+    void stop() {
+        logger.info("Stopped");
+    }
+
+    private void floodPacket(RawPacket inPkt) {
+        NodeConnector incoming_connector = inPkt.getIncomingNodeConnector();
+        Node incoming_node = incoming_connector.getNode();
+
+        // Get ports on the switch where the packet arrived
+        Set<NodeConnector> nodeConnectors = this.switchManager
+                .getUpNodeConnectors(incoming_node);
+
+        for (NodeConnector p : nodeConnectors) {
+            if (!p.equals(incoming_connector)) {
+                try {
+                    RawPacket destPkt = new RawPacket(inPkt);
+                    destPkt.setOutgoingNodeConnector(p);
+                    this.dataPacketService.transmitDataPacket(destPkt);
+                } catch (ConstructionException e2) {
+                    continue;
+                }
+            }
+        }
+    }
+
+    @Override
+    public PacketResult receiveDataPacket(RawPacket inPkt) {
+        if (inPkt == null) {
+            return PacketResult.IGNORED;
+        }
+        logger.trace("Received a frame of size: {}",
+                inPkt.getPacketData().length);
+
+        // Hub implementation
+        if (function.equals("hub")) {
+            floodPacket(inPkt);
+            return PacketResult.CONSUME;
+        }
+
+        // Else L2 MAC-learning switch implementation
+        Packet formattedPak = this.dataPacketService.decodeDataPacket(inPkt);
+        NodeConnector incoming_connector = inPkt.getIncomingNodeConnector();
+        Node incoming_node = incoming_connector.getNode();
+
+        if (formattedPak instanceof Ethernet) {
+            // Extract packet srcMAC and dstMAC, and convert to hex long we can
+            // use
+
+            // Use methods getSourceMACAddress() and getDestinationMACAddress of
+            // Ethernet class
+
+            // Convert bytes[] to long value using BitBufferHelper.toNumber()
+
+            // Cache the src MAC address and associate with appropriate
+            // connector
+
+            NodeConnector dst_connector = null;
+
+            // Do I know the destination MAC?
+
+            // If yes. generate match and action for the flow, and program a
+            // flow rule in switch
+            if (dst_connector != null) {
+                // List<Action> actions = new ArrayList<Action>();
+                // actions.add(new Output(dst_connector));
+
+                // Match match = new Match();
+                // match.setField( new MatchField(MatchType.IN_PORT,
+                // incoming_connector) );
+                // match.setField( new MatchField(MatchType.DL_DST,
+                // dstMAC.clone()) );
+
+                // Flow f = new Flow(match, actions);
+
+                // Modify the flow on the network node
+                // Status status = programmer.addFlow(incoming_node, f);
+                // if (!status.isSuccess()) {
+                // logger.warn("SDN Plugin failed to program the flow: {}. The failure is: {}",
+                // f, status.getDescription());
+                // return PacketResult.IGNORED;
+                // }
+                // logger.info("Installed flow {} in node {}", f,
+                // incoming_node);
+            } else {
+                floodPacket(inPkt);
+                return PacketResult.CONSUME;
+            }
+        }
+        return PacketResult.IGNORED;
+    }
+}
