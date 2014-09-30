@@ -102,6 +102,9 @@
     <nsf.version>0.4.2-SNAPSHOT</nsf.version>
     <sfc-model.version>0.0.1-SNAPSHOT</sfc-model.version>
     <netty.version>4.0.2.Final</netty.version>
+    <adsal_L2_forwarding.version>0.5.0-SNAPSHOT</adsal_L2_forwarding.version>
+    <mdsal_L2_forwarding.version>0.1.0-SNAPSHOT</mdsal_L2_forwarding.version>
+    <karaf.empty.version>1.4.2-SNAPSHOT</karaf.empty.version>
   </properties>
 
   <build>

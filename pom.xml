@@ -20,6 +20,8 @@
     <module>mdsal_L2_forwarding</module>
     <module>distribution/opendaylight-osgi-adsal</module>
     <module>distribution/opendaylight-osgi-mdsal</module>
+    <module>features-tutorial/adsal</module>
+    <module>features-tutorial/mdsal</module>
   </modules>
 
 </project>

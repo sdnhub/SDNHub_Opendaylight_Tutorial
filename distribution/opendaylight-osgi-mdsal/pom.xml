@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.sdnhub.odl.tutorial</groupId>
+    <artifactId>commons</artifactId>
+    <version>1.1.0-SNAPSHOT</version>
+    <relativePath>../../commons/parent/</relativePath>
+  </parent>
+
+  <artifactId>distribution-osgi-mdsal</artifactId>
+  <packaging>pom</packaging>
+  <name>OpenDaylight OSGi MD-SAL tutorial Distribution</name>
+
+  <dependencies>
+    <!-- SDNHub tutorial -->
+    <dependency>
+      <groupId>org.sdnhub.odl.tutorial</groupId>
+      <artifactId>mdsal_L2_forwarding</artifactId>
+      <version>0.1.0-SNAPSHOT</version>
+    </dependency>
+
+    <!-- ODL controller dependencies -->
+    <dependency>
+      <groupId>org.opendaylight.controller</groupId>
+      <artifactId>distribution.opendaylight</artifactId>
+      <version>0.1.2-SNAPSHOT</version>
+      <classifier>osgipackage</classifier>
+      <type>zip</type>
+      <!-- Make sure this isn't included on any classpath-->
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- openflowplugin -->
+    <dependency>
+      <groupId>org.opendaylight.openflowplugin</groupId>
+      <artifactId>openflowplugin</artifactId>
+      <version>${openflowplugin.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.openflowplugin</groupId>
+      <artifactId>openflowplugin-api</artifactId>
+      <version>${openflowplugin.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.openflowplugin</groupId>
+      <artifactId>openflowplugin-extension-api</artifactId>
+      <version>${openflowplugin.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.openflowplugin</groupId>
+      <artifactId>openflowplugin-extension-nicira</artifactId>
+      <version>${openflowplugin.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.openflowplugin</groupId>
+      <artifactId>openflowjava-extension-nicira-api</artifactId>
+      <version>${openflowplugin.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.openflowplugin</groupId>
+      <artifactId>openflowplugin-controller-config</artifactId>
+      <version>${openflowplugin.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.openflowplugin</groupId>
+      <artifactId>openflowjava-extension-nicira</artifactId>
+      <version>${openflowplugin.version}</version>
+    </dependency>
+    <!-- openflowjava -->
+    <dependency>
+      <groupId>org.opendaylight.openflowjava</groupId>
+      <artifactId>util</artifactId>
+      <version>${openflowjava.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.openflowjava</groupId>
+      <artifactId>openflow-protocol-api</artifactId>
+      <version>${openflowjava.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.openflowjava</groupId>
+      <artifactId>openflow-protocol-impl</artifactId>
+      <version>${openflowjava.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.openflowjava</groupId>
+      <artifactId>openflow-protocol-spi</artifactId>
+      <version>${openflowjava.version}</version>
+    </dependency>
+</dependencies>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>${basedir}/src/assemble/resources</directory>
+      </resource>
+      <resource>
+        <filtering>true</filtering>
+        <directory>${project.build.directory}/generated-resources</directory>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>2.8</version>
+        <executions>
+          <execution>
+            <id>unpack-shared-resources</id>
+            <goals>
+              <goal>unpack-dependencies</goal>
+            </goals>
+            <phase>generate-resources</phase>
+            <configuration>
+              <outputDirectory>${project.build.directory}/generated-resources</outputDirectory>
+              <includeArtifactIds>distribution.opendaylight</includeArtifactIds>
+              <includeGroupIds>org.opendaylight.controller</includeGroupIds>
+              <excludeTransitive>true</excludeTransitive>
+              <ignorePermissions>false</ignorePermissions>
+              <skip>${skip.distribution}</skip>
+            </configuration>
+          </execution>
+          <execution>
+            <id>unpack-provided-configs</id>
+            <goals>
+              <goal>unpack-dependencies</goal>
+            </goals>
+            <phase>generate-resources</phase>
+            <configuration>
+             <outputDirectory>${project.build.directory}/generated-resources/opendaylight/configuration</outputDirectory>
+             <includeArtifactIds>
+               openflowplugin-controller-config
+             </includeArtifactIds>
+             <includes>**\/*.xml</includes>
+             <excludeTransitive>true</excludeTransitive>
+             <ignorePermissions>false</ignorePermissions>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>distro-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <descriptors>
+                <descriptor>src/assemble/bin.xml</descriptor>
+              </descriptors>
+              <skipAssembly>${skip.distribution}</skipAssembly>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
