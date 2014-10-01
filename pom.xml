@@ -22,6 +22,7 @@
     <module>distribution/opendaylight-osgi-mdsal</module>
     <module>features-tutorial/adsal</module>
     <module>features-tutorial/mdsal</module>
+    <module>distribution/opendaylight-karaf</module>
   </modules>
 
 </project>

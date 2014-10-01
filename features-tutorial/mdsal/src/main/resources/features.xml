@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features name="tutorial-mdsal-${project.version}" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://karaf.apache.org/xmlns/features/v1.2.0 http://karaf.apache.org/xmlns/features/v1.2.0">
+    <repository>mvn:org.opendaylight.controller/features-base/${odl.karaf.base.version}/xml/features</repository>
+    <repository>mvn:org.opendaylight.controller/features-nsf/${nsf.version}/xml/features</repository>
+    <repository>mvn:org.opendaylight.controller/features-adsal/${sal.version}/xml/features</repository>
+    <repository>mvn:org.opendaylight.controller/features-adsal-compatibility/${odl.karaf.base.version}/xml/features</repository>
+    <repository>mvn:org.opendaylight.openflowplugin/features-openflowplugin/${openflowplugin.version}/xml/features</repository>
+
+    <feature name="sdnhub-tutorial-mdsal" description="SDN Hub Tutorial :: OpenDaylight :: MD-SAL" version='${project.version}'>
+        <feature version="${openflowplugin.version}">odl-openflowplugin-southbound</feature>
+        <feature version="${openflowplugin.version}">odl-openflowplugin-flow-services</feature>
+        <feature version="${sal.version}">odl-adsal-compatibility</feature>
+        <feature version="${sal.version}">odl-adsal-all</feature>
+        <feature version="${nsf.version}">odl-nsf-all</feature>
+        <bundle>mvn:org.sdnhub.odl.tutorial/mdsal_L2_forwarding/${mdsal_L2_forwarding.version}</bundle>
+    </feature>
+</features>

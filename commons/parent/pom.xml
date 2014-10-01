@@ -90,6 +90,7 @@
     <openflowjava.version>0.5-SNAPSHOT</openflowjava.version>
     <controller.model.version>1.1-SNAPSHOT</controller.model.version>
     <yang.binding.version>0.6.2-SNAPSHOT</yang.binding.version>
+    <yangtools.version>0.6.2-SNAPSHOT</yangtools.version>
     <controller.config.version>0.2.5-SNAPSHOT</controller.config.version>
     <northbound.commons.version>0.4.2-SNAPSHOT</northbound.commons.version>
     <!-- 3rd Pary Dependency Versions -->
@@ -105,6 +106,8 @@
     <adsal_L2_forwarding.version>0.5.0-SNAPSHOT</adsal_L2_forwarding.version>
     <mdsal_L2_forwarding.version>0.1.0-SNAPSHOT</mdsal_L2_forwarding.version>
     <karaf.empty.version>1.4.2-SNAPSHOT</karaf.empty.version>
+    <feature.adsal-tutorial.version>1.0.0-SNAPSHOT</feature.adsal-tutorial.version>
+    <feature.mdsal-tutorial.version>1.0.0-SNAPSHOT</feature.mdsal-tutorial.version>
   </properties>
 
   <build>

@@ -22,24 +22,6 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-              <!--<Import-Package>
-                org.opendaylight.controller.switchmanager,
-                org.opendaylight.controller.forwardingrulesmanager,
-                org.opendaylight.controller.sal.core,
-                org.opendaylight.controller.sal.utils,
-                org.opendaylight.controller.sal.action,
-                org.opendaylight.controller.sal.packet,
-                org.opendaylight.openflowplugin.*,
-                org.opendaylight.openflowjava.*,
-                org.opendaylight.controller.sal.binding.api,
-                org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819,
-                org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes,
-                org.opendaylight.yangtools.yang.binding,
-                org.apache.felix.dm,
-                org.slf4j,
-                org.eclipse.osgi.framework.console,
-                org.osgi.framework
-            </Import-Package>-->
             <Embed-Transitive>
               false
             </Embed-Transitive>
