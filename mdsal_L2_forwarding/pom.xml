@@ -33,7 +33,7 @@
             </Bundle-Activator>
           </instructions>
           <manifestLocation>${project.basedir}/META-INF</manifestLocation>
-          <buildDirectory>${project.basedir}/distribution/opendaylight-osgi-mdsal/target/distribution-osgi-mdsal-1.1.0-SNAPSHOT-osgipackage/opendaylight/plugins/</buildDirectory> <!-- TODO use pom var -->
+          <buildDirectory>${project.basedir}/../distribution/opendaylight-osgi-mdsal/target/distribution-osgi-mdsal-1.1.0-SNAPSHOT-osgipackage/opendaylight/plugins/</buildDirectory> <!-- TODO use pom var -->
          </configuration>
       </plugin>
     </plugins>
