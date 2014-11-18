@@ -172,9 +172,9 @@
             <karaf.distro.artifactId>opendaylight-karaf-empty</karaf.distro.artifactId>
             <karaf.distro.version>1.4.2-SNAPSHOT</karaf.distro.version>
           </systemPropertyVariables>
-          <dependenciesToScan>
+          <!--<dependenciesToScan>
            <dependency>org.opendaylight.yangtools:features-test</dependency>
-          </dependenciesToScan>
+          </dependenciesToScan>-->
         </configuration>
       </plugin>
     </plugins>

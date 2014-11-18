@@ -11,7 +11,7 @@
 
     <feature name="sdnhub-plugin-exercise" description="SDN Hub Tutorial :: OpenDaylight :: Plugins exercise" version='${project.version}'>
         <feature version="${karaf.base.version}">odl-base-all</feature>
-        <feature version="${karaf.adsal-compat.version}">odl-adsal-compatibility</feature>
+        <feature version="${karaf.adsal.version}">odl-adsal-compatibility</feature>
         <feature version="${karaf.adsal.version}">odl-adsal-all</feature>
         <feature version="${karaf.nsf.version}">odl-nsf-all</feature>
         <feature version="${karaf.restconf.version}">odl-restconf</feature>
