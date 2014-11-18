@@ -4,12 +4,12 @@ import org.opendaylight.tutorial.plugin_exercise.api.MdsalConsumer;
 import org.opendaylight.tutorial.plugin_exercise.internal.TutorialFlowProgrammer;
 import org.opendaylight.tutorial.plugin_exercise.internal.MdsalConsumerImpl;
 import org.opendaylight.tutorial.plugin_exercise.internal.TutorialOvsBridgeManager;
-
 import org.apache.felix.dm.Component;
 import org.opendaylight.controller.sal.binding.api.BindingAwareBroker;
 import org.opendaylight.controller.sal.core.ComponentActivatorAbstractBase;
 import org.opendaylight.ovsdb.plugin.api.OvsdbConfigurationService;
 import org.opendaylight.ovsdb.plugin.api.OvsdbConnectionService;
+import org.opendaylight.ovsdb.plugin.api.OvsdbInventoryListener;
 
 /**
  * OSGi Bundle Activator for the plugin exercise
@@ -76,6 +76,7 @@ public class Activator extends ComponentActivatorAbstractBase {
         }
 
         if (imp.equals(TutorialOvsBridgeManager.class)) {
+            c.setInterface(OvsdbInventoryListener.class.getName(), null);
             c.add(createServiceDependency().setService(OvsdbConfigurationService.class).setRequired(true));
             c.add(createServiceDependency().setService(OvsdbConnectionService.class).setRequired(true));
         }

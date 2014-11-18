@@ -59,6 +59,7 @@ public class TutorialFlowProgrammer implements OpendaylightInventoryListener {
         if (notificationService != null) {
             notificationService.registerNotificationListener(this);
         }
+        logger.info("Registered {} to MD-SAL notification service", this);
     }
 
     @Override
@@ -68,7 +69,7 @@ public class TutorialFlowProgrammer implements OpendaylightInventoryListener {
 
     @Override
     public void onNodeConnectorUpdated(NodeConnectorUpdated nodeConnectorUpdated) {
-        logger.debug("MD-SAL NodeConnector Update: {}", nodeConnectorUpdated);
+        logger.info("MD-SAL NodeConnector Update: {}", nodeConnectorUpdated);
         FlowCapableNodeConnectorUpdated port = nodeConnectorUpdated.getAugmentation(FlowCapableNodeConnectorUpdated.class);
         NodeKey nodeKey = nodeConnectorUpdated.getNodeConnectorRef().getValue().firstKeyOf(Node.class, NodeKey.class);
         logger.info("MD-SAL NodeConnector: Parent node {}, PortInfo {}", nodeKey.getId().getValue(), port);
@@ -81,7 +82,7 @@ public class TutorialFlowProgrammer implements OpendaylightInventoryListener {
 
     @Override
     public void onNodeUpdated(NodeUpdated nodeUpdated) {
-        logger.debug("MD-SAL Node Update: {}", nodeUpdated);
+        logger.info("MD-SAL Node Update: {}", nodeUpdated);
         programDefaultDropRule(nodeUpdated.getId());
         programDefaultLLDPRule(nodeUpdated.getId());
 
