@@ -10,6 +10,7 @@ import org.opendaylight.controller.sal.core.ComponentActivatorAbstractBase;
 import org.opendaylight.ovsdb.plugin.api.OvsdbConfigurationService;
 import org.opendaylight.ovsdb.plugin.api.OvsdbConnectionService;
 import org.opendaylight.ovsdb.plugin.api.OvsdbInventoryListener;
+import org.opendaylight.ovsdb.plugin.api.OvsdbInventoryService;
 
 /**
  * OSGi Bundle Activator for the plugin exercise
@@ -77,6 +78,7 @@ public class Activator extends ComponentActivatorAbstractBase {
 
         if (imp.equals(TutorialOvsBridgeManager.class)) {
             c.setInterface(OvsdbInventoryListener.class.getName(), null);
+            c.add(createServiceDependency().setService(OvsdbInventoryService.class).setRequired(true));
             c.add(createServiceDependency().setService(OvsdbConfigurationService.class).setRequired(true));
             c.add(createServiceDependency().setService(OvsdbConnectionService.class).setRequired(true));
         }
