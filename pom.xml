@@ -18,10 +18,12 @@
     <module>commons/parent</module>
     <module>adsal_L2_forwarding</module>
     <module>mdsal_L2_forwarding</module>
+    <module>plugin_exercise</module>
     <module>distribution/opendaylight-osgi-adsal</module>
     <module>distribution/opendaylight-osgi-mdsal</module>
     <module>features-tutorial/adsal</module>
     <module>features-tutorial/mdsal</module>
+    <module>features-tutorial/plugin_exercise</module>
     <module>distribution/opendaylight-karaf</module>
   </modules>
 

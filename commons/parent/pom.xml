@@ -88,6 +88,10 @@
     <openflowjava-nicira.version>0.0.3-SNAPSHOT</openflowjava-nicira.version>
     <openflowjava-extension.version>0.0.3-SNAPSHOT</openflowjava-extension.version>
     <openflowjava.version>0.5-SNAPSHOT</openflowjava.version>
+    <ovsdb.library.version>1.0.0-SNAPSHOT</ovsdb.library.version>
+    <ovsdb.plugin.version>1.0.0-SNAPSHOT</ovsdb.plugin.version>
+    <ovsdb.schema.openvswitch.version>1.0.0-SNAPSHOT</ovsdb.schema.openvswitch.version>
+    <ovsdb.schema.hardwarevtep.version>1.0.0-SNAPSHOT</ovsdb.schema.hardwarevtep.version>
     <controller.model.version>1.1-SNAPSHOT</controller.model.version>
     <yang.binding.version>0.6.2-SNAPSHOT</yang.binding.version>
     <yangtools.version>0.6.2-SNAPSHOT</yangtools.version>
@@ -99,15 +103,26 @@
     <portlet.version>2.0</portlet.version>
     <httpcomponents.version>4.2.1</httpcomponents.version>
     <karaf.shell.version>3.0.0</karaf.shell.version>
-    <odl.karaf.base.version>1.4.2-SNAPSHOT</odl.karaf.base.version>
     <nsf.version>0.4.2-SNAPSHOT</nsf.version>
     <sfc-model.version>0.0.1-SNAPSHOT</sfc-model.version>
     <netty.version>4.0.2.Final</netty.version>
     <adsal_L2_forwarding.version>0.5.0-SNAPSHOT</adsal_L2_forwarding.version>
     <mdsal_L2_forwarding.version>0.1.0-SNAPSHOT</mdsal_L2_forwarding.version>
+    <plugin_exercise.version>0.1.0-SNAPSHOT</plugin_exercise.version>
+    <!-- Karaf Dependency Versions -->
     <karaf.empty.version>1.4.2-SNAPSHOT</karaf.empty.version>
     <feature.adsal-tutorial.version>1.0.0-SNAPSHOT</feature.adsal-tutorial.version>
     <feature.mdsal-tutorial.version>1.0.0-SNAPSHOT</feature.mdsal-tutorial.version>
+    <feature.plugin-exercise.version>1.0.0-SNAPSHOT</feature.plugin-exercise.version>
+    <karaf.shell.version>3.0.0</karaf.shell.version>
+    <karaf.base.version>1.4.2-SNAPSHOT</karaf.base.version>
+    <karaf.nsf.version>0.4.2-SNAPSHOT</karaf.nsf.version>
+    <karaf.mdsal.version>1.1-SNAPSHOT</karaf.mdsal.version>
+    <karaf.adsal.version>0.8.1-SNAPSHOT</karaf.adsal.version>
+    <karaf.adsal-compat.version>1.4.2-SNAPSHOT</karaf.adsal-compat.version>
+    <karaf.ovsdb.version>1.0.0-SNAPSHOT</karaf.ovsdb.version>
+    <karaf.empty.version>1.4.2-SNAPSHOT</karaf.empty.version>
+    <karaf.restconf.version>1.1-SNAPSHOT</karaf.restconf.version>
   </properties>
 
   <build>
@@ -244,6 +259,11 @@
     <dependency>
       <groupId>equinoxSDK381</groupId>
       <artifactId>org.eclipse.osgi</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.equinox</groupId>
+      <artifactId>region</artifactId>
+      <version>1.0.0.v20110506</version>
     </dependency>
     <dependency>
       <groupId>io.netty</groupId>

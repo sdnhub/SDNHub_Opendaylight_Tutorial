@@ -17,15 +17,29 @@
   <dependencies>
     <dependency>
       <groupId>org.opendaylight.controller</groupId>
+      <artifactId>features-restconf</artifactId>
+      <version>${karaf.restconf.version}</version>
+      <classifier>features</classifier>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.controller</groupId>
+      <artifactId>features-mdsal</artifactId>
+      <version>${karaf.mdsal.version}</version>
+      <classifier>features</classifier>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.controller</groupId>
       <artifactId>features-base</artifactId>
-      <version>${odl.karaf.base.version}</version>
+      <version>${karaf.base.version}</version>
       <classifier>features</classifier>
       <type>xml</type>
     </dependency>
     <dependency>
       <groupId>org.opendaylight.controller</groupId>
       <artifactId>features-adsal-compatibility</artifactId>
-      <version>${odl.karaf.base.version}</version>
+      <version>${karaf.base.version}</version>
       <classifier>features</classifier>
       <type>xml</type>
     </dependency>
