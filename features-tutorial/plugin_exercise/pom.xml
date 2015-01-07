@@ -135,7 +135,7 @@
             <karaf.distro.version>1.4.2-SNAPSHOT</karaf.distro.version>
           </systemPropertyVariables>
           <dependenciesToScan>
-           <dependency>org.opendaylight.yangtools:features-test</dependency>
+              <!--<dependency>org.opendaylight.yangtools:features-test</dependency>-->
           </dependenciesToScan>
         </configuration>
       </plugin>

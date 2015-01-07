@@ -14,11 +14,6 @@
     <maven>3.0</maven>
   </prerequisites>
   <properties>
-    <branding.version>1.0.0-SNAPSHOT</branding.version>
-    <karaf.resources.version>1.4.2-SNAPSHOT</karaf.resources.version>
-    <karaf.version>3.0.1</karaf.version>
-    <feature.adsal-tutorial.version>1.0.0-SNAPSHOT</feature.adsal-tutorial.version>
-    <feature.mdsal-tutorial.version>1.0.0-SNAPSHOT</feature.mdsal-tutorial.version>
   </properties>
 
   <dependencies>
@@ -42,7 +37,7 @@
     <dependency>
       <groupId>org.opendaylight.controller</groupId>
       <artifactId>karaf.branding</artifactId>
-      <version>${branding.version}</version>
+      <version>${karaf.branding.version}</version>
       <scope>compile</scope>
     </dependency>
 

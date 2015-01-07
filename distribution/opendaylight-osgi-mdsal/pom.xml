@@ -24,7 +24,7 @@
     <dependency>
       <groupId>org.opendaylight.controller</groupId>
       <artifactId>distribution.opendaylight</artifactId>
-      <version>0.1.2-SNAPSHOT</version>
+      <version>${osgipackage.version}</version>
       <classifier>osgipackage</classifier>
       <type>zip</type>
       <!-- Make sure this isn't included on any classpath-->

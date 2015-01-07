@@ -10,8 +10,8 @@
         <feature version="${sal.version}">odl-adsal-all</feature>
         <feature version="${nsf.version}">odl-nsf-all</feature>
         <bundle>mvn:org.sdnhub.odl.tutorial/adsal_L2_forwarding/${adsal_L2_forwarding.version}</bundle>
-        <bundle>mvn:org.sdnhub.odl/ofbroker/0.1.0-SNAPSHOT</bundle>
-        <bundle>mvn:org.sdnhub.odl/protocol_plugins.openflow10/0.1.0-SNAPSHOT</bundle>
-        <bundle>mvn:org.sdnhub.odl/protocol_plugins.openflow13/0.1.0-SNAPSHOT</bundle>
+        <bundle>mvn:org.sdnhub.odl/ofbroker/${sdnhub.of_plugins.version}</bundle>
+        <bundle>mvn:org.sdnhub.odl/protocol_plugins.openflow10/${sdnhub.of_plugins.version}</bundle>
+        <bundle>mvn:org.sdnhub.odl/protocol_plugins.openflow13/${sdnhub.of_plugins.version}</bundle>
     </feature>
 </features>
