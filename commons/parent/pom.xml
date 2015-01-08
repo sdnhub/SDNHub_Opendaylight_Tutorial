@@ -136,8 +136,9 @@
     <karaf.adsal.version>0.8.1-Helium</karaf.adsal.version>
     <karaf.adsal-compat.version>1.4.2-Helium</karaf.adsal-compat.version>
     <karaf.ovsdb.version>1.0.0-Helium</karaf.ovsdb.version>
-    <karaf.l2switch.version>1.1-Helium</karaf.l2switch.version>
+    <karaf.l2switch.version>0.1.0-Helium</karaf.l2switch.version>
     <karaf.restconf.version>1.1-Helium</karaf.restconf.version>
+    <karaf.dlux.version>0.1.0-Helium</karaf.dlux.version>
   </properties>
 
   <build>
