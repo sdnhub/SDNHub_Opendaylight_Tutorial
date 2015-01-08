@@ -123,7 +123,7 @@
     <nsf.version>0.4.2-Helium</nsf.version>
     <sfc-model.version>0.0.1-Helium</sfc-model.version>
     <netty.version>4.0.2.Final</netty.version>
-    <karaf.version>3.0.1</karaf.version>
+    <karaf.version>3.0.2</karaf.version>
 
     <!-- Karaf Dependency Versions -->
     <karaf.empty.version>1.4.2-Helium</karaf.empty.version>
