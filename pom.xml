@@ -1,30 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>org.sdnhub.odl.tutorial</groupId>
     <artifactId>commons</artifactId>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>1.2.0-SNAPSHOT</version>
     <relativePath>commons/parent</relativePath>
   </parent>
 
-  <artifactId>tutorial</artifactId>
+  <artifactId>main</artifactId>
   <version>0.6.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <url>http://sdnhub.org/tutorials/opendaylight</url>
   <modules>
-    <module>commons/parent</module>
-    <module>adsal_L2_forwarding</module>
-    <module>mdsal_L2_forwarding</module>
-    <module>plugin_exercise</module>
-    <module>distribution/opendaylight-osgi-adsal</module>
-    <module>distribution/opendaylight-osgi-mdsal</module>
-    <module>features-tutorial/adsal</module>
-    <module>features-tutorial/mdsal</module>
-    <module>features-tutorial/plugin_exercise</module>
-    <module>distribution/opendaylight-karaf</module>
+      <module>commons/parent</module> <!-- Common properties -->
+      <module>commons/utils</module>  <!-- Common utilities useful for flow programming -->
+      <module>learning-switch</module><!-- App 1: Learning switch -->
+      <module>tapapp</module>         <!-- App 2: Traffic tap -->
+      <module>features</module>       <!-- Karaf feature description -->
+      <module>distribution</module>   <!-- Branding and packaging -->
   </modules>
 
 </project>

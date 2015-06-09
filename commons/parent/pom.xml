@@ -8,137 +8,69 @@
   <parent>
     <groupId>org.opendaylight.odlparent</groupId>
     <artifactId>odlparent</artifactId>
-    <version>1.4.2-Helium</version>
+    <version>1.5.0-SNAPSHOT</version>
     <relativePath></relativePath>
   </parent>
 
   <groupId>org.sdnhub.odl.tutorial</groupId>
   <artifactId>commons</artifactId>
-  <name>SDN Hub OpenDaylight tutorial POM</name>
-  <version>1.1.0-SNAPSHOT</version>
+  <name>SDN Hub Tutorial project common properties</name>
+  <version>1.2.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <url>http://sdnhub.org/tutorials/opendaylight</url>
 
   <properties>
     <!-- General properties -->
-    <sdnhubnexus>http://repo.sdnhub.org:8080/nexus/content</sdnhubnexus>
     <nexusproxy>http://nexus.opendaylight.org/content</nexusproxy>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version.source>1.7</java.version.source>
     <java.version.target>1.7</java.version.target>
     <checkstyle.skip>true</checkstyle.skip>
-    <skip.distribution>false</skip.distribution>
-    <spring.current.version>4.0.2.RELEASE</spring.current.version>
+    <codeGeneratorPath>src/main/yang-gen-code</codeGeneratorPath>
+    <configCodeGeneratorPath>src/main/yang-gen-config</configCodeGeneratorPath>
 
     <!-- SDN Hub artifact versions -->
-    <sdnhub.of_plugins.version>0.1.0-SNAPSHOT</sdnhub.of_plugins.version>
-    <brandfragment.version>0.1.0-SNAPSHOT</brandfragment.version>
-    <adsal_L2_forwarding.version>0.5.0-SNAPSHOT</adsal_L2_forwarding.version>
-    <mdsal_L2_forwarding.version>0.1.0-SNAPSHOT</mdsal_L2_forwarding.version>
-    <plugin_exercise.version>0.1.0-SNAPSHOT</plugin_exercise.version>
-    <feature.adsal-tutorial.version>1.0.0-SNAPSHOT</feature.adsal-tutorial.version>
-    <feature.mdsal-tutorial.version>1.0.0-SNAPSHOT</feature.mdsal-tutorial.version>
-    <feature.plugin-exercise.version>1.0.0-SNAPSHOT</feature.plugin-exercise.version>
+    <learning-switch.version>1.0.0-SNAPSHOT</learning-switch.version>
+    <feature.learning-switch.version>1.0.0-SNAPSHOT</feature.learning-switch.version>
+    <tapapp.version>1.0.0-SNAPSHOT</tapapp.version>
+    <feature.tapapp.version>1.0.0-SNAPSHOT</feature.tapapp.version>
+    <utils.version>1.0.0-SNAPSHOT</utils.version>
+
+    <!-- Project config files -->
+    <learning-switch.configfile>49-learning-switch-config.xml</learning-switch.configfile>
+    <tapapp.configfile>50-tapapp-config.xml</tapapp.configfile>
 
     <!-- ODL Controller Dependency Versions -->
-    <osgipackage.version>0.1.2-Helium</osgipackage.version>
-    <appauth.version>0.4.2-Helium</appauth.version>
-    <arphandler.version>0.5.2-Helium</arphandler.version>
-    <bundlescanner.implementation.version>0.4.2-Helium</bundlescanner.implementation.version>
-    <bundlescanner.version>0.4.2-Helium</bundlescanner.version>
-    <clustering.services.version>0.5.1-Helium</clustering.services.version>
-    <clustering.services_implementation.version>0.4.3-Helium</clustering.services_implementation.version>
-    <commons.httpclient.version>0.1.2-Helium</commons.httpclient.version>
-    <commons.northbound.version>0.4.2-Helium</commons.northbound.version>
-    <configuration.implementation.version>0.4.3-Helium</configuration.implementation.version>
-    <configuration.version>0.4.3-Helium</configuration.version>
-    <connectionmanager.version>0.1.2-Helium</connectionmanager.version>
-    <connectionmanager.northbound.version>0.1.2-Helium</connectionmanager.northbound.version>
-    <connectionmanager.implementation.version>0.1.2-Helium</connectionmanager.implementation.version>
-    <containermanager.version>0.5.2-Helium</containermanager.version>
-    <containermanager.implementation.version>0.5.2-Helium</containermanager.implementation.version>
-    <containermanager.northbound.version>0.4.2-Helium</containermanager.northbound.version>
-    <controllermanager.northbound.version>0.0.2-Helium</controllermanager.northbound.version>
-    <devices.web.version>0.4.2-Helium</devices.web.version>
-    <flows.web.version>0.4.2-Helium</flows.web.version>
-    <flowprogrammer.northbound.version>0.4.2-Helium</flowprogrammer.northbound.version>
-    <forwarding.staticrouting>0.5.2-Helium</forwarding.staticrouting>
-    <forwarding.staticrouting.northbound.version>0.4.2-Helium</forwarding.staticrouting.northbound.version>
-    <forwardingrulesmanager.version>0.6.0-Helium</forwardingrulesmanager.version>
-    <forwardingrulesmanager.implementation.version>0.4.2-Helium</forwardingrulesmanager.implementation.version>
-    <hosttracker.api.version>0.5.2-Helium</hosttracker.api.version>
-    <hosttracker.implementation.version>0.5.2-Helium</hosttracker.implementation.version>
-    <hosttracker.northbound.version>0.4.2-Helium</hosttracker.northbound.version>
-    <logging.bridge.version>0.4.2-Helium</logging.bridge.version>
-    <l2switch.version>0.1.0-Helium</l2switch.version>
-    <protocol_plugins.stub.version>0.4.2-Helium</protocol_plugins.stub.version>
-    <routing.dijkstra_implementation.version>0.4.2-Helium</routing.dijkstra_implementation.version>
-    <sal.version>0.8.1-Helium</sal.version>
-    <sal.implementation.version>0.4.2-Helium</sal.implementation.version>
-    <sal.connection.version>0.1.2-Helium</sal.connection.version>
-    <sal.networkconfiguration.version>0.0.3-Helium</sal.networkconfiguration.version>
-    <security.version>0.4.2-Helium</security.version>
-    <statistics.northbound.version>0.4.2-Helium</statistics.northbound.version>
-    <statisticsmanager.implementation.version>0.4.2-Helium</statisticsmanager.implementation.version>
-    <statisticsmanager.version>0.5.1-Helium</statisticsmanager.version>
-    <subnets.northbound.version>0.4.2-Helium</subnets.northbound.version>
-    <switchmanager.api.version>0.7.1-Helium</switchmanager.api.version>
-    <switchmanager.implementation.version>0.4.2-Helium</switchmanager.implementation.version>
-    <switchmanager.northbound.version>0.4.2-Helium</switchmanager.northbound.version>
-    <topology.northbound.version>0.4.2-Helium</topology.northbound.version>
-    <topologymanager.version>0.4.2-Helium</topologymanager.version>
-    <topologymanager.shell.version>1.0.0-Helium</topologymanager.shell.version>
-    <topology.web.version>0.4.2-Helium</topology.web.version>
-    <troubleshoot.web.version>0.4.2-Helium</troubleshoot.web.version>
-    <usermanager.implementation.version>0.4.2-Helium</usermanager.implementation.version>
-    <usermanager.northbound.version>0.0.2-Helium</usermanager.northbound.version>
-    <usermanager.version>0.4.2-Helium</usermanager.version>
-    <web.version>0.4.2-Helium</web.version>
+    <mdsal.version>1.2.0-SNAPSHOT</mdsal.version>
+    <controller.model.version>1.2.0-SNAPSHOT</controller.model.version>
+    <controller.config.version>0.3.0-SNAPSHOT</controller.config.version>
+    <yangtools.version>0.7.0-SNAPSHOT</yangtools.version>
+    <yang.jmx.version>0.3.0-SNAPSHOT</yang.jmx.version>
+    <ietf-inet-types.version>2010.09.24.4-Helium</ietf-inet-types.version>
+    <ietf-yang-types.version>2010.09.24.4-Helium</ietf-yang-types.version>
+    <ietf-yang-types-20130715.version>2013.07.15.1-Helium</ietf-yang-types-20130715.version>
 
-    <mdsal.version>1.1-Helium</mdsal.version>
-    <controller.model.version>1.1-Helium</controller.model.version>
-    <openflowj.version>1.0.2</openflowj.version>
-    <protocol_plugins.openflow.version>0.4.2-Helium</protocol_plugins.openflow.version>
-    <openflowplugin.version>0.0.3-Helium</openflowplugin.version>
-    <openflowplugin-nicira.version>0.0.3-Helium</openflowplugin-nicira.version>
-    <openflowplugin-extension.version>0.0.3-Helium</openflowplugin-extension.version>
-    <openflowjava-nicira.version>0.0.3-Helium</openflowjava-nicira.version>
-    <openflowjava-extension.version>0.0.3-Helium</openflowjava-extension.version>
-    <openflowjava.version>0.5-Helium</openflowjava.version>
-    <ovsdb.library.version>1.0.0-Helium</ovsdb.library.version>
-    <ovsdb.plugin.version>1.0.0-Helium</ovsdb.plugin.version>
-    <ovsdb.schema.openvswitch.version>1.0.0-Helium</ovsdb.schema.openvswitch.version>
-    <ovsdb.schema.hardwarevtep.version>1.0.0-Helium</ovsdb.schema.hardwarevtep.version>
-    <yang.binding.version>0.6.2-Helium</yang.binding.version>
-    <yangtools.version>0.6.2-Helium</yangtools.version>
-    <controller.config.version>0.2.5-Helium</controller.config.version>
-    <northbound.commons.version>0.4.2-Helium</northbound.commons.version>
+    <!-- Southbound plugin versions -->
+    <openflowplugin.version>0.1.0-SNAPSHOT</openflowplugin.version>
+    <openflowjava.version>0.6.0-SNAPSHOT</openflowjava.version>
 
-    <!-- 3rd Pary Dependency Versions -->
-    <sf.net.jung2.version>2.0.1</sf.net.jung2.version>
-    <commons.collection.version>1.0</commons.collection.version>
-    <portlet.version>2.0</portlet.version>
-    <httpcomponents.version>4.2.1</httpcomponents.version>
-    <karaf.shell.version>3.0.0</karaf.shell.version>
-    <nsf.version>0.4.2-Helium</nsf.version>
-    <sfc-model.version>0.0.1-Helium</sfc-model.version>
-    <netty.version>4.0.2.Final</netty.version>
+    <!-- Karaf and maven dependencies -->
+    <opendaylight-karaf-empty.version>1.6.0-SNAPSHOT</opendaylight-karaf-empty.version>
     <karaf.version>3.0.2</karaf.version>
+    <karaf.resources.version>1.5.0-SNAPSHOT</karaf.resources.version>
+    <build.plugins.plugin.version>1.9.1</build.plugins.plugin.version>
+    <karaf.branding.version>1.0.0-SNAPSHOT</karaf.branding.version>
 
-    <!-- Karaf Dependency Versions -->
-    <karaf.empty.version>1.4.2-Helium</karaf.empty.version>
-    <karaf.resources.version>1.4.2-Helium</karaf.resources.version>
-    <karaf.branding.version>1.0.0-Helium</karaf.branding.version>
-    <karaf.shell.version>3.0.0</karaf.shell.version>
-    <karaf.base.version>1.4.2-Helium</karaf.base.version>
-    <karaf.nsf.version>0.4.2-Helium</karaf.nsf.version>
-    <karaf.mdsal.version>1.1-Helium</karaf.mdsal.version>
-    <karaf.adsal.version>0.8.1-Helium</karaf.adsal.version>
-    <karaf.adsal-compat.version>1.4.2-Helium</karaf.adsal-compat.version>
-    <karaf.ovsdb.version>1.0.0-Helium</karaf.ovsdb.version>
-    <karaf.l2switch.version>0.1.0-Helium</karaf.l2switch.version>
-    <karaf.restconf.version>1.1-Helium</karaf.restconf.version>
-    <karaf.dlux.version>0.1.0-Helium</karaf.dlux.version>
+    <!-- Karaf feature version -->
+    <feature.base.version>1.5.0-SNAPSHOT</feature.base.version>
+    <feature.empty.version>1.5.0-SNAPSHOT</feature.empty.version>
+    <feature.l2switch.version>0.2.0-SNAPSHOT</feature.l2switch.version>
+    <feature.dlux.version>0.2.0-SNAPSHOT</feature.dlux.version>
+    <feature.restconf.version>1.2.0-SNAPSHOT</feature.restconf.version>
+    <feature.mdsal.version>1.2.0-SNAPSHOT</feature.mdsal.version>
+    <feature.openflowplugin.version>0.1.0-SNAPSHOT</feature.openflowplugin.version>
+    <feature.odl.tutorial.version>1.0.0-SNAPSHOT</feature.odl.tutorial.version>
+
   </properties>
 
   <build>
@@ -183,18 +115,6 @@
         <enabled>true</enabled>
       </snapshots>
     </repository>
-    <!-- SDNHub Public Repo group -->
-    <repository>
-      <id>sdnhub-nexus</id>
-      <name>sdnhub</name>
-      <url>http://repo.sdnhub.org:8080/nexus/content/groups/public</url>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-    </repository>
   </repositories>
 
   <pluginRepositories>
@@ -223,83 +143,51 @@
   </pluginRepositories>
 
   <dependencies>
-    <!-- SDNHub common artifacts -->
+    <!-- Dependencies for the Yang and configs -->
     <dependency>
-       <groupId>org.sdnhub.odl</groupId>
-       <artifactId>web.brandfragment</artifactId>
-       <version>${brandfragment.version}</version>
-    </dependency>
-    <!-- Other common bundles -->
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
+      <groupId>org.opendaylight.yangtools.model</groupId>
+      <artifactId>ietf-yang-types-20130715</artifactId>
+      <version>${ietf-yang-types-20130715.version}</version>
     </dependency>
     <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-core</artifactId>
-    </dependency>
-      <dependency>
-      <groupId>org.apache.felix</groupId>
-      <artifactId>org.apache.felix.dependencymanager</artifactId>
-      </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-annotations</artifactId>
+      <groupId>org.opendaylight.yangtools.model</groupId>
+      <artifactId>ietf-yang-types</artifactId>
+      <version>${ietf-yang-types.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-core</artifactId>
+      <groupId>org.opendaylight.yangtools.model</groupId>
+      <artifactId>ietf-inet-types</artifactId>
+      <version>${ietf-inet-types.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-databind</artifactId>
+      <groupId>org.opendaylight.yangtools.model</groupId>
+      <artifactId>yang-ext</artifactId>
+      <version>2013.09.07.4-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>com.google.code.gson</groupId>
-      <artifactId>gson</artifactId>
-      <scope>compile</scope>
+      <groupId>org.opendaylight.yangtools</groupId>
+      <artifactId>yang-common</artifactId>
+      <version>${yangtools.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.google.guava</groupId>
-      <artifactId>guava</artifactId>
+      <groupId>org.opendaylight.yangtools</groupId>
+      <artifactId>yang-binding</artifactId>
+      <version>${yangtools.version}</version>
     </dependency>
     <dependency>
-      <groupId>commons-codec</groupId>
-      <artifactId>commons-codec</artifactId>
-      <optional>true</optional>
+      <groupId>org.opendaylight.controller</groupId>
+      <artifactId>config-api</artifactId>
+      <version>${controller.config.version}</version>
     </dependency>
     <dependency>
-      <groupId>commons-lang</groupId>
-      <artifactId>commons-lang</artifactId>
+      <groupId>org.opendaylight.controller</groupId>
+      <artifactId>sal-binding-config</artifactId>
+      <version>${mdsal.version}</version>
     </dependency>
     <dependency>
-      <groupId>equinoxSDK381</groupId>
-      <artifactId>org.eclipse.osgi</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.equinox</groupId>
-      <artifactId>region</artifactId>
-      <version>1.0.0.v20110506</version>
-    </dependency>
-    <dependency>
-      <groupId>io.netty</groupId>
-      <artifactId>netty-all</artifactId>
-      <version>${netty.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-collections</groupId>
-      <artifactId>commons-collections</artifactId>
-      <version>${commons.collection.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>javax.portlet</groupId>
-      <artifactId>portlet-api</artifactId>
-      <version>${portlet.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpcore-nio</artifactId>
-      <version>${httpcomponents.version}</version>
+      <groupId>org.opendaylight.controller</groupId>
+      <artifactId>sal-binding-api</artifactId>
+      <version>${mdsal.version}</version>
     </dependency>
   </dependencies>
 </project>

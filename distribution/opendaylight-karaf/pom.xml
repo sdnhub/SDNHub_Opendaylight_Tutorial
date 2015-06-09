@@ -2,16 +2,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.sdnhub.odl.tutorial</groupId>
-    <artifactId>commons</artifactId>
-    <version>1.1.0-SNAPSHOT</version>
-    <relativePath>../../commons/parent/</relativePath>
+    <groupId>org.sdnhub.odl.tutorial.distribution</groupId>
+    <artifactId>distribution-parent</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
   </parent>
-  <artifactId>distribution-karaf</artifactId>
-  <version>0.5.0-SNAPSHOT</version>
+  <artifactId>packaging</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
+  <name>SDN Hub tutorial project distribution packaging</name>
   <prerequisites>
-    <maven>3.0</maven>
+    <maven>3.2</maven>
   </prerequisites>
   <properties>
   </properties>
@@ -33,81 +33,33 @@
       <scope>runtime</scope>
     </dependency>
 
-    <!-- ODL Branding -->
-    <dependency>
-      <groupId>org.opendaylight.controller</groupId>
-      <artifactId>karaf.branding</artifactId>
-      <version>${karaf.branding.version}</version>
-      <scope>compile</scope>
-    </dependency>
-
-    <!-- ODL Resources needed for karaf -->
+    <!-- Resources needed for karaf -->
     <dependency>
       <groupId>org.opendaylight.controller</groupId>
       <artifactId>opendaylight-karaf-resources</artifactId>
       <version>${karaf.resources.version}</version>
     </dependency>
-
-    <!-- MD-SAL dependencies -->
     <dependency>
-      <groupId>org.opendaylight.controller.model</groupId>
-      <artifactId>model-flow-base</artifactId>
-      <version>${mdsal.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.opendaylight.controller.model</groupId>
-      <artifactId>model-flow-statistics</artifactId>
-      <version>${mdsal.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.opendaylight.controller.model</groupId>
-      <artifactId>model-flow-service</artifactId>
-      <version>${mdsal.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.opendaylight.controller.model</groupId>
-      <artifactId>model-inventory</artifactId>
-      <version>${mdsal.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.opendaylight.yangtools</groupId>
-      <artifactId>yang-binding</artifactId>
-      <version>${yangtools.version}</version>
+      <groupId>org.sdnhub.odl.tutorial.distribution</groupId>
+      <artifactId>karaf-branding</artifactId>
+      <version>${karaf.branding.version}</version>
     </dependency>
 
-    <!-- Project dependencies -->
+    <!-- Project feature dependencies -->
     <dependency>
-      <groupId>org.sdnhub.odl.tutorial</groupId>
-      <artifactId>features-adsal-tutorial</artifactId>
-      <version>${feature.adsal-tutorial.version}</version>
-      <classifier>features</classifier>
-      <type>xml</type>
-      <scope>runtime</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.sdnhub.odl.tutorial</groupId>
-      <artifactId>features-mdsal-tutorial</artifactId>
-      <version>${feature.mdsal-tutorial.version}</version>
-      <classifier>features</classifier>
-      <type>xml</type>
-      <scope>runtime</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.sdnhub.odl.tutorial</groupId>
-      <artifactId>features-plugin-exercise</artifactId>
-      <version>${feature.plugin-exercise.version}</version>
-      <classifier>features</classifier>
-      <type>xml</type>
-      <scope>runtime</scope>
+        <groupId>org.sdnhub.odl.tutorial</groupId>
+        <artifactId>features</artifactId>
+        <version>${feature.odl.tutorial.version}</version>
+        <classifier>features</classifier>
+        <type>xml</type>
+        <scope>runtime</scope>
     </dependency>
 
     <!-- Other useful features -->
     <dependency>
       <groupId>org.opendaylight.l2switch</groupId>
       <artifactId>features-l2switch</artifactId>
-      <version>${karaf.l2switch.version}</version>
+      <version>${feature.l2switch.version}</version>
       <classifier>features</classifier>
       <type>xml</type>
       <scope>runtime</scope>
@@ -116,7 +68,7 @@
     <dependency>
       <groupId>org.opendaylight.dlux</groupId>
       <artifactId>features-dlux</artifactId>
-      <version>${karaf.dlux.version}</version>
+      <version>${feature.dlux.version}</version>
       <classifier>features</classifier>
       <type>xml</type>
       <scope>runtime</scope>
@@ -125,7 +77,7 @@
     <dependency>
       <groupId>org.opendaylight.controller</groupId>
       <artifactId>features-restconf</artifactId>
-      <version>${karaf.restconf.version}</version>
+      <version>${feature.restconf.version}</version>
       <classifier>features</classifier>
       <type>xml</type>
       <scope>runtime</scope>
@@ -216,18 +168,67 @@
     </pluginManagement>
     <plugins>
       <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>2.6</version>
+        <executions>
+          <execution>
+            <id>copy-resources</id>
+            <!-- here the phase you need -->
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${basedir}/target/assembly</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>src/main/assembly</directory>
+                </resource>
+              </resources>
+              <overwrite>true</overwrite>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>org.apache.karaf.tooling</groupId>
         <artifactId>karaf-maven-plugin</artifactId>
-        <version>${karaf.version}</version>
         <extensions>true</extensions>
         <configuration>
+          <!-- no startupFeatures -->
           <bootFeatures>
-            <feature>standard</feature>
+              <feature>standard</feature>
+              <feature>standard</feature>
               <feature>odl-base-all</feature>
-              <feature>odl-adsal-northbound</feature>
+              <feature>odl-restconf-noauth</feature>
+              <feature>sdnhub-tutorial-tapapp</feature>
+              <feature>sdnhub-tutorial-learning-switch</feature>
           </bootFeatures>
+          <!-- no installedFeatures -->
         </configuration>
         <executions>
+          <execution>
+            <id>populate-system</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>features-add-to-repository</goal>
+            </goals>
+            <configuration>
+              <descriptors>
+                <descriptor>mvn:org.apache.karaf.features/standard/${karaf.version}/xml/features</descriptor>
+              </descriptors>
+              <features>
+                <feature>standard</feature>
+                <feature>config</feature>
+                <feature>package</feature>
+                <feature>kar</feature>
+                <feature>ssh</feature>
+                <feature>management</feature>
+                <feature>war</feature>
+              </features>
+              <repository>target/assembly/system</repository>
+            </configuration>
+          </execution>
           <execution>
             <id>process-resources</id>
             <goals>
@@ -245,23 +246,32 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>${checkstyle.version}</version>
+        <configuration>
+          <excludes>**\/target\/,**\/bin\/,**\/target-ide\/,**\/configuration\/initial\/</excludes>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
-        <version>2.6</version>
+        <version>2.8</version>
         <executions>
           <execution>
             <id>copy</id>
             <goals>
               <goal>copy</goal>
             </goals>
+            <!-- here the phase you need -->
             <phase>generate-resources</phase>
             <configuration>
               <artifactItems>
                 <artifactItem>
-                  <groupId>org.opendaylight.controller</groupId>
-                  <artifactId>karaf.branding</artifactId>
+                  <groupId>org.sdnhub.odl.tutorial.distribution</groupId>
+                  <artifactId>karaf-branding</artifactId>
                   <version>${karaf.branding.version}</version>
                   <outputDirectory>target/assembly/lib</outputDirectory>
-                  <destFileName>karaf.branding-${branding.version}.jar</destFileName>
+                  <destFileName>karaf-branding-${karaf.branding.version}.jar</destFileName>
                 </artifactItem>
               </artifactItems>
             </configuration>
@@ -281,6 +291,38 @@
              <ignorePermissions>false</ignorePermissions>
             </configuration>
           </execution>
+          <execution>
+            <id>copy-dependencies</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/assembly/system</outputDirectory>
+              <excludeArtifactIds>distribution.vtn-coordinator</excludeArtifactIds>
+              <overWriteReleases>false</overWriteReleases>
+              <overWriteSnapshots>true</overWriteSnapshots>
+              <overWriteIfNewer>true</overWriteIfNewer>
+              <useRepositoryLayout>true</useRepositoryLayout>
+              <addParentPoms>true</addParentPoms>
+              <copyPom>true</copyPom>
+            </configuration>
+          </execution>
+          <execution>
+            <id>copy-externalapps</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/assembly/externalapps</outputDirectory>
+              <includeArtifactIds>distribution.vtn-coordinator</includeArtifactIds>
+              <overWriteReleases>false</overWriteReleases>
+              <overWriteSnapshots>true</overWriteSnapshots>
+              <overWriteIfNewer>true</overWriteIfNewer>
+              <excludeTransitive>true</excludeTransitive>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
       <plugin>
@@ -296,13 +338,13 @@
                   <tasks>
                     <chmod perm="755">
                         <fileset dir="${project.build.directory}/assembly/bin">
-                          <include name="karaf" />
-                          <include name="instance" />
-                          <include name="start" />
-                          <include name="stop" />
-                          <include name="status" />
-                          <include name="client" />
-                          <include name="shell" />
+                          <include name="karaf"/>
+                          <include name="instance"/>
+                          <include name="start"/>
+                          <include name="stop"/>
+                          <include name="status"/>
+                          <include name="client"/>
+                          <include name="shell"/>
                         </fileset>
                     </chmod>
                   </tasks>

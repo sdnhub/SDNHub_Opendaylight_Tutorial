@@ -1,0 +1,109 @@
+module tap {
+    yang-version 1;
+    namespace "urn:sdnhub:tutorial:odl:tap";
+    prefix tap;
+
+    import opendaylight-inventory {prefix inv; revision-date 2013-08-19;}
+    import yang-ext {prefix ext; revision-date "2013-07-09";}
+    import ietf-yang-types { prefix yang; revision-date 2010-09-24; }
+    import ietf-inet-types { prefix inet; }
+    description "Tap configuration";
+
+    revision "2015-06-01" {
+        description "Initial version.";
+    }
+
+    typedef port-number {
+        type uint32;
+    }
+
+
+    typedef field-type {
+        type enumeration {
+            enum source;
+            enum destination;
+            enum both;
+        }
+    }
+
+    typedef traffic-type {
+        type enumeration {
+            enum ARP;
+            enum DNS;
+            enum HTTP;
+            enum HTTPS;
+            enum TCP;
+            enum UDP;
+            enum DHCP;
+            enum ICMP;
+        }
+    }
+
+    grouping tap-grouping {
+        leaf node {
+            mandatory true;
+            type leafref {
+                path "/inv:nodes/inv:node/inv:id";
+            }
+        }
+        leaf-list src-node-connector {
+            min-elements 1;
+            type leafref {
+                path "/inv:nodes/inv:node/inv:node-connector/inv:id";
+            }
+        }
+        leaf-list sink-node-connector {
+            min-elements 1;
+            type leafref {
+                path "/inv:nodes/inv:node/inv:node-connector/inv:id";
+            }
+        }
+        container mac-address-match {
+            leaf type {
+                type field-type;
+            }
+            leaf value {
+                type yang:mac-address;
+            }
+        }
+        container ip-address-match {
+            leaf type {
+                type field-type;
+            }
+            leaf value {
+                type inet:ipv4-prefix;
+            }
+        }
+        leaf traffic-match {
+            type traffic-type;
+        }
+    }
+
+    container tap-spec {
+        list tap {
+            key "id";
+            leaf id {
+               config false;
+               type string;
+            }
+            uses tap-grouping;
+        }
+    }
+
+    augment /tap-spec/tap {
+        ext:augment-identifier "ProtocolInfo";
+        leaf dl-type {
+            type uint16;
+        }
+        leaf nw-proto {
+            type uint8;
+        }
+        leaf tp-src {
+            type uint16;
+        }
+        leaf tp-dst {
+            type uint16;
+        }
+    }
+}
+
