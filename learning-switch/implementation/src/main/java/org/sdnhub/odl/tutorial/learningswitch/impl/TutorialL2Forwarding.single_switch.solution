@@ -145,25 +145,25 @@ public class TutorialL2Forwarding  implements AutoCloseable, PacketProcessingLis
         	//flood packet (1)
             packetOut(ingressNodeRef, floodNodeConnectorRef, notification.getPayload());
         } else {
-        	//TODO: Extract payload
-        	
-        	//TODO: Extract MAC address (2.1)
             byte[] payload = notification.getPayload();
             byte[] dstMacRaw = PacketParsingUtils.extractDstMac(payload);
             byte[] srcMacRaw = PacketParsingUtils.extractSrcMac(payload);
-            
+
+            //Extract MAC addresses (2.1)
             String srcMac = PacketParsingUtils.rawMacToString(srcMacRaw);
             String dstMac = PacketParsingUtils.rawMacToString(dstMacRaw);
 
-            //TODO: Learn source MAC address (2.2)
+            //Learn source MAC address (2.2)
+            this.macTable.put(srcMac, ingressNodeConnectorId);
 
-            //TODO: Lookup destination MAC address in table (2.3)
-            NodeConnectorId egressNodeConnectorId = null;
+            //Lookup destination MAC address in table (2.3)
+            NodeConnectorId egressNodeConnectorId = this.macTable.get(dstMac) ;
 
-			//TODO: If found (2.3.1)
+            //If found (2.3.1)
             if (egressNodeConnectorId != null) {
-                //TODO: 2.3.1.1 perform FLOW_MOD for that dst_mac through the target node connector
-                //TODO: 2.3.1.2 perform PACKET_OUT of this packet to target node connector
+                programL2Flow(ingressNodeId, dstMac, ingressNodeConnectorId, egressNodeConnectorId);
+                NodeConnectorRef egressNodeConnectorRef = InventoryUtils.getNodeConnectorRef(egressNodeConnectorId);
+                packetOut(ingressNodeRef, egressNodeConnectorRef, payload);
             } else {
             	//2.3.2 Flood packet
                 packetOut(ingressNodeRef, floodNodeConnectorRef, payload);
@@ -194,21 +194,18 @@ public class TutorialL2Forwarding  implements AutoCloseable, PacketProcessingLis
 
         //Creating match object
         MatchBuilder matchBuilder = new MatchBuilder();
-        //MatchUtils.createEthDstMatch(matchBuilder, ..., null);
-        //MatchUtils.createInPortMatch(matchBuilder, ...);
+        MatchUtils.createEthDstMatch(matchBuilder, new MacAddress(dstMac), null);
+        MatchUtils.createInPortMatch(matchBuilder, ingressNodeConnectorId);
 
-        /*
-         *  Instructions List Stores Individual Instructions
+        // Instructions List Stores Individual Instructions
         InstructionsBuilder isb = new InstructionsBuilder();
         List<Instruction> instructions = Lists.newArrayList();
         InstructionBuilder ib = new InstructionBuilder();
         ApplyActionsBuilder aab = new ApplyActionsBuilder();
         ActionBuilder ab = new ActionBuilder();
         List<Action> actionList = Lists.newArrayList();
-         */
 
-        /*
-         *  Set output action
+        // Set output action
         OutputActionBuilder output = new OutputActionBuilder();
         output.setOutputNodeConnector(egressNodeConnectorId);
         output.setMaxLength(65535); //Send full packet and No buffer
@@ -216,22 +213,19 @@ public class TutorialL2Forwarding  implements AutoCloseable, PacketProcessingLis
         ab.setOrder(0);
         ab.setKey(new ActionKey(0));
         actionList.add(ab.build());
-         */
 
-        /*
-         *  Create Apply Actions Instruction
+        // Create Apply Actions Instruction
         aab.setAction(actionList);
         ib.setInstruction(new ApplyActionsCaseBuilder().setApplyActions(aab.build()).build());
         ib.setOrder(0);
         ib.setKey(new InstructionKey(0));
         instructions.add(ib.build());
-         */
 
-        /*
-         *  Create Flow
-        String flowId = "L2_Rule_" + dstMac;
+        // Create Flow
         FlowBuilder flowBuilder = new FlowBuilder();
         flowBuilder.setMatch(matchBuilder.build());
+
+        String flowId = "L2_Rule_" + dstMac;
         flowBuilder.setId(new FlowId(flowId));
         FlowKey key = new FlowKey(new FlowId(flowId));
         flowBuilder.setBarrier(true);
@@ -242,10 +236,7 @@ public class TutorialL2Forwarding  implements AutoCloseable, PacketProcessingLis
         flowBuilder.setHardTimeout(0);
         flowBuilder.setIdleTimeout(0);
         flowBuilder.setInstructions(isb.setInstruction(instructions).build());
-         */
 
-        /* Perform transaction to store rule
-         * 
         InstanceIdentifier<Flow> flowIID = InstanceIdentifier.builder(Nodes.class)
                 .child(Node.class, new NodeKey(nodeId))
                 .augmentation(FlowCapableNode.class)
@@ -253,6 +244,5 @@ public class TutorialL2Forwarding  implements AutoCloseable, PacketProcessingLis
                 .child(Flow.class, flowBuilder.getKey())
                 .build();
         GenericTransactionUtils.writeData(dataBroker, LogicalDatastoreType.CONFIGURATION, flowIID, flowBuilder.build(), true);
-         */
     }
 }
