@@ -202,7 +202,6 @@
               <feature>odl-base-all</feature>
               <feature>odl-restconf-noauth</feature>
               <feature>sdnhub-tutorial-tapapp</feature>
-              <feature>sdnhub-tutorial-learning-switch</feature>
           </bootFeatures>
           <!-- no installedFeatures -->
         </configuration>
