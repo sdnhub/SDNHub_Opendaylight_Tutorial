@@ -70,42 +70,41 @@ public class TutorialTapProvider implements AutoCloseable, DataChangeListener, O
     private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
     //Members related to MD-SAL operations
-	private List<Registration> registrations;
-	private DataBroker dataBroker;
+    private List<Registration> registrations;
+    private DataBroker dataBroker;
     private SalFlowService salFlowService;
-    private Map<String, Integer> tapFlows = Maps.newHashMap();
 
     public TutorialTapProvider(DataBroker dataBroker, NotificationProviderService notificationService, RpcProviderRegistry rpcProviderRegistry) {
-    	//Store the data broker for reading/writing from inventory store
+        //Store the data broker for reading/writing from inventory store
         this.dataBroker = dataBroker;
 
         //Object used for flow programming through RPC calls
         this.salFlowService = rpcProviderRegistry.getRpcService(SalFlowService.class);
 
-    	//List used to track notification (both data change and YANG-defined) listener registrations
-    	this.registrations = registerDataChangeListeners(); 
+        //List used to track notification (both data change and YANG-defined) listener registrations
+        this.registrations = registerDataChangeListeners();
 
-    	//Register this object for receiving notifications when there are New switches
+        //Register this object for receiving notifications when there are New switches
         registrations.add(notificationService.registerNotificationListener(this));
     }
 
     public void close() throws Exception {
         for (Registration registration : registrations) {
-        	registration.close();
+            registration.close();
         }
         registrations.clear();
     }
 
     private List<Registration> registerDataChangeListeners() {
         Preconditions.checkNotNull(dataBroker);
-        List<Registration> registrations = Lists.newArrayList(); 
+        List<Registration> registrations = Lists.newArrayList();
         try {
             //Register listener for config updates and topology
             InstanceIdentifier<TapSpec> tapSpecIID = InstanceIdentifier.builder(TapSpec.class)
                     .build();
             ListenerRegistration<DataChangeListener> registration = dataBroker.registerDataChangeListener(
-            		LogicalDatastoreType.CONFIGURATION,  
-            		tapSpecIID, this, AsyncDataBroker.DataChangeScope.SUBTREE);
+                    LogicalDatastoreType.CONFIGURATION,
+                    tapSpecIID, this, AsyncDataBroker.DataChangeScope.SUBTREE);
             LOG.debug("DataChangeListener registered with MD-SAL for path {}", tapSpecIID);
             registrations.add(registration);
 
@@ -119,10 +118,10 @@ public class TutorialTapProvider implements AutoCloseable, DataChangeListener, O
     public void onDataChanged(AsyncDataChangeEvent<InstanceIdentifier<?>, DataObject> change) {
         LOG.debug("Data changed: {} created, {} updated, {} removed",
                 change.getCreatedData().size(), change.getUpdatedData().size(), change.getRemovedPaths().size());
-        
+
         DataObject dataObject;
-        
-		// Iterate over any created nodes or interfaces
+
+        // Iterate over any created nodes or interfaces
         for (Map.Entry<InstanceIdentifier<?>, DataObject> entry : change.getCreatedData().entrySet()) {
             dataObject = entry.getValue();
             LOG.debug("ADDED Path {}, Object {}", entry.getKey(), dataObject);
@@ -136,7 +135,7 @@ public class TutorialTapProvider implements AutoCloseable, DataChangeListener, O
             LOG.debug("REMOVED Path {}, Object {}", path, dataObject);
             //TODO: If tap configuration remove, call removeTap()
         }
-        
+
         for (Map.Entry<InstanceIdentifier<?>, DataObject> entry : change.getUpdatedData().entrySet()) {
             dataObject = entry.getValue();
             DataObject originalDataObject = originalData.get(entry.getKey());
@@ -153,43 +152,41 @@ public class TutorialTapProvider implements AutoCloseable, DataChangeListener, O
      *    2.3 Create flow object with match + action list
      *    2.4 Program flow and preserve the flow-id for future
      */
-	
-	private void programTap(Tap tap) {
-		NodeId nodeId = tap.getNode();
-		String tapId = tap.getId();
+
+    private void programTap(Tap tap) {
+        NodeId nodeId = tap.getNode();
+        String tapId = tap.getId();
 
         //Creating match object
         MatchBuilder matchBuilder = new MatchBuilder();
 
-        /* 
-         * TODO: Based on what config is available, 
+        /*
+         * TODO: Based on what config is available,
          * set one or more of these match conditions
-         * 
+         *
         MatchUtils.createEthSrcMatch(matchBuilder, srcMac);
-		MatchUtils.createEthDstMatch(matchBuilder, dstMac, null);					
+        MatchUtils.createEthDstMatch(matchBuilder, dstMac, null);
         MatchUtils.createSrcL3IPv4Match(matchBuilder, srcIpPrefix);
         MatchUtils.createDstL3IPv4Match(matchBuilder, dstIpPrefix);
         MatchUtils.createEtherTypeMatch(matchBuilder, dlType);
-		MatchUtils.createIpProtocolMatch(matchBuilder, nwProto);
+        MatchUtils.createIpProtocolMatch(matchBuilder, nwProto);
         if (nwProto == 6) {
-			MatchUtils.createSetSrcTcpMatch(matchBuilder, new PortNumber(tpSrc));
-			MatchUtils.createSetDstTcpMatch(matchBuilder, new PortNumber(tpDst));
+            MatchUtils.createSetSrcTcpMatch(matchBuilder, new PortNumber(tpSrc));
+            MatchUtils.createSetDstTcpMatch(matchBuilder, new PortNumber(tpDst));
         } else if (nwProto == 17) {
-			MatchUtils.createSetSrcUdpMatch(matchBuilder, new PortNumber(tpSrc));
-			MatchUtils.createSetDstUdpMatch(matchBuilder, new PortNumber(tpDst));
+            MatchUtils.createSetSrcUdpMatch(matchBuilder, new PortNumber(tpSrc));
+            MatchUtils.createSetDstUdpMatch(matchBuilder, new PortNumber(tpDst));
         }
          */
 
         /*
-		 * Special case: Each OF rule can only take 1 in-port match. But, it is
-		 * possible a tap configuration specifies multiple in-ports. It is important
-		 * to iterate over the list and send multiple flows to the switch
+         * Special case: Each OF rule can only take 1 in-port match. But, it is
+         * possible a tap configuration specifies multiple in-ports. It is important
+         * to iterate over the list and send multiple flows to the switch
          *
         MatchUtils.createInPortMatch(matchBuilder, srcNodeConnector);
          */
 
-        // Instructions List Stores Individual Instructions
-        InstructionsBuilder isb = new InstructionsBuilder();
         List<Instruction> instructions = Lists.newArrayList();
         InstructionBuilder ib = new InstructionBuilder();
         ApplyActionsBuilder aab = new ApplyActionsBuilder();
@@ -199,14 +196,14 @@ public class TutorialTapProvider implements AutoCloseable, DataChangeListener, O
         //For each sink node connector
         int outputIndex = 0;
         for (NodeConnectorId sinkNodeConnector: tap.getSinkNodeConnector()) {
-	        // Set output action
-	        OutputActionBuilder output = new OutputActionBuilder();
-	        output.setOutputNodeConnector(sinkNodeConnector);
-	        output.setMaxLength(65535); //Send full packet and No buffer
-	        ab.setAction(new OutputActionCaseBuilder().setOutputAction(output.build()).build());
-	        ab.setKey(new ActionKey(outputIndex));
-	        ab.setOrder(outputIndex++);
-	        actionList.add(ab.build());
+            // Set output action
+            OutputActionBuilder output = new OutputActionBuilder();
+            output.setOutputNodeConnector(sinkNodeConnector);
+            output.setMaxLength(65535); //Send full packet and No buffer
+            ab.setAction(new OutputActionCaseBuilder().setOutputAction(output.build()).build());
+            ab.setKey(new ActionKey(outputIndex));
+            ab.setOrder(outputIndex++);
+            actionList.add(ab.build());
         }
 
         // Create Apply Actions Instruction
@@ -215,6 +212,10 @@ public class TutorialTapProvider implements AutoCloseable, DataChangeListener, O
         ib.setOrder(0);
         ib.setKey(new InstructionKey(0));
         instructions.add(ib.build());
+
+        // Instructions List Stores Individual Instructions
+        InstructionsBuilder isb = new InstructionsBuilder();
+        isb.setInstruction(instructions);
 
         // Create generic Flow object
         String flowIdStr = "Tap_" + tapId + "SrcPort_"; // TODO: Concat srcNodeConnector to each flow;
@@ -228,7 +229,10 @@ public class TutorialTapProvider implements AutoCloseable, DataChangeListener, O
         flowBuilder.setFlowName(flowIdStr);
         flowBuilder.setHardTimeout(0);
         flowBuilder.setIdleTimeout(0);
-        flowBuilder.setInstructions(isb.setInstruction(instructions).build());
+
+        //Set the match and instructions to the  flow
+        flowBuilder.setMatch(matchBuilder.build());
+        flowBuilder.setInstructions(isb.build());
 
         //Program flow by adding it to the flow table in the opendaylight-inventory
         InstanceIdentifier<Flow> flowIID = InstanceIdentifier.builder(Nodes.class)
@@ -238,17 +242,17 @@ public class TutorialTapProvider implements AutoCloseable, DataChangeListener, O
                 .child(Flow.class, flowBuilder.getKey())
                 .build();
         GenericTransactionUtils.writeData(dataBroker, LogicalDatastoreType.CONFIGURATION, flowIID, flowBuilder.build(), true);
-	}
+    }
 
     private void removeTap(Tap tap) {
-		NodeId nodeId = tap.getNode();
-    	String tapId = tap.getId();   
-        String flowIdStr = "Tap_" + tapId + "Flow";
+        NodeId nodeId = tap.getNode();
+        String tapId = tap.getId();
+        String flowIdStr = "Tap_" + tapId + "SrcPort_"; // TODO: Concat srcNodeConnector to each flow;
         FlowId flowId = new FlowId(flowIdStr);
         FlowBuilder flowBuilder = new FlowBuilder()
-	        	.setKey(new FlowKey(flowId))
-	        	.setId(flowId)
-	        	.setTableId((short)0);
+                .setKey(new FlowKey(flowId))
+                .setId(flowId)
+                .setTableId((short)0);
         InstanceIdentifier<Flow> flowIID = InstanceIdentifier.builder(Nodes.class)
                 .child(Node.class, new NodeKey(nodeId))
                 .augmentation(FlowCapableNode.class)
@@ -256,9 +260,9 @@ public class TutorialTapProvider implements AutoCloseable, DataChangeListener, O
                 .child(Flow.class, flowBuilder.getKey())
                 .build();
         GenericTransactionUtils.writeData(dataBroker, LogicalDatastoreType.CONFIGURATION, flowIID, flowBuilder.build(), false);
-	}
+    }
 
-	@Override
+    @Override
     public void onNodeRemoved(NodeRemoved nodeRemoved) {
         LOG.debug("Node removed {}", nodeRemoved);
     }
@@ -271,16 +275,16 @@ public class TutorialTapProvider implements AutoCloseable, DataChangeListener, O
     @Override
     public void onNodeUpdated(NodeUpdated nodeUpdated) {
         LOG.debug("Node updated {}", nodeUpdated);
-    	NodeId nodeId = nodeUpdated.getId();
+        NodeId nodeId = nodeUpdated.getId();
         FlowCapableNodeUpdated switchDesc = nodeUpdated.getAugmentation(FlowCapableNodeUpdated.class);
         if (switchDesc != null) {
-        	LOG.info("Node {}, OpenFlow description {}", nodeId, switchDesc);
+            LOG.info("Node {}, OpenFlow description {}", nodeId, switchDesc);
         }
-    	
-    	//Remove all flows using RPC call to MD-SAL Flow Service
+
+        //Remove all flows using RPC call to MD-SAL Flow Service
         RemoveFlowInputBuilder flowBuilder = new RemoveFlowInputBuilder()
-        	.setBarrier(true)
-        	.setNode(InventoryUtils.getNodeRef(nodeId));
+            .setBarrier(true)
+            .setNode(InventoryUtils.getNodeRef(nodeId));
         salFlowService.removeFlow(flowBuilder.build());
     }
 
@@ -290,7 +294,7 @@ public class TutorialTapProvider implements AutoCloseable, DataChangeListener, O
         NodeId nodeId = InventoryUtils.getNodeId(nodeConnectorUpdated.getNodeConnectorRef());
         FlowCapableNodeConnectorUpdated portDesc = nodeConnectorUpdated.getAugmentation(FlowCapableNodeConnectorUpdated.class);
         if (portDesc != null) {
-        	LOG.info("Node {}, OpenFlow Port description {}", nodeId, portDesc);
+            LOG.info("Node {}, OpenFlow Port description {}", nodeId, portDesc);
         }
     }
 }
