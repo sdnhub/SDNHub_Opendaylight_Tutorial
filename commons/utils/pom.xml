@@ -21,26 +21,6 @@
           <artifactId>openflowplugin-api</artifactId>
           <version>${openflowplugin.version}</version>
         </dependency>
-        <dependency>
-          <groupId>org.opendaylight.openflowjava</groupId>
-          <artifactId>openflow-protocol-impl</artifactId>
-          <version>${openflowjava.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.opendaylight.openflowjava</groupId>
-          <artifactId>openflow-protocol-api</artifactId>
-          <version>${openflowjava.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.opendaylight.openflowjava</groupId>
-          <artifactId>openflow-protocol-spi</artifactId>
-          <version>${openflowjava.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.opendaylight.openflowjava</groupId>
-          <artifactId>util</artifactId>
-          <version>${openflowjava.version}</version>
-        </dependency>
   </dependencies>
 
   <build>

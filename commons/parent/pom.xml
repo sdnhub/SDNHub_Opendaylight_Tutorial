@@ -35,41 +35,40 @@
     <tapapp.version>1.0.0-SNAPSHOT</tapapp.version>
     <feature.tapapp.version>1.0.0-SNAPSHOT</feature.tapapp.version>
     <utils.version>1.0.0-SNAPSHOT</utils.version>
+    <feature.odl.tutorial.version>1.0.0-SNAPSHOT</feature.odl.tutorial.version>
+    <karaf.branding.version>1.0.0-SNAPSHOT</karaf.branding.version>
 
     <!-- Project config files -->
     <learning-switch.configfile>49-learning-switch-config.xml</learning-switch.configfile>
     <tapapp.configfile>50-tapapp-config.xml</tapapp.configfile>
 
     <!-- ODL Controller Dependency Versions -->
-    <mdsal.version>1.2.0-SNAPSHOT</mdsal.version>
-    <controller.model.version>1.2.0-SNAPSHOT</controller.model.version>
-    <controller.config.version>0.3.0-SNAPSHOT</controller.config.version>
-    <yangtools.version>0.7.0-SNAPSHOT</yangtools.version>
-    <yang.jmx.version>0.3.0-SNAPSHOT</yang.jmx.version>
-    <ietf-inet-types.version>2010.09.24.7-SNAPSHOT</ietf-inet-types.version>
-    <ietf-yang-types.version>2010.09.24.7-SNAPSHOT</ietf-yang-types.version>
-    <yang-ext.version>2013.09.07.7-SNAPSHOT</yang-ext.version>
+    <mdsal.version>1.2.0-Lithium</mdsal.version>
+    <controller.model.version>1.2.0-Lithium</controller.model.version>
+    <controller.config.version>0.3.0-Lithium</controller.config.version>
+    <yangtools.version>0.7.0-Lithium</yangtools.version>
+    <yang.jmx.version>0.3.0-Lithium</yang.jmx.version>
+    <ietf-inet-types.version>2010.09.24.7-Lithium</ietf-inet-types.version>
+    <ietf-yang-types.version>2010.09.24.7-Lithium</ietf-yang-types.version>
+    <yang-ext.version>2013.09.07.7-Lithium</yang-ext.version>
 
     <!-- Southbound plugin versions -->
-    <openflowplugin.version>0.1.0-SNAPSHOT</openflowplugin.version>
-    <openflowjava.version>0.6.0-SNAPSHOT</openflowjava.version>
+    <openflowplugin.version>0.1.0-Lithium</openflowplugin.version>
 
     <!-- Karaf and maven dependencies -->
-    <opendaylight-karaf-empty.version>1.6.0-SNAPSHOT</opendaylight-karaf-empty.version>
+    <opendaylight-karaf-empty.version>1.6.0-Lithium</opendaylight-karaf-empty.version>
     <karaf.version>3.0.2</karaf.version>
-    <karaf.resources.version>1.5.0-SNAPSHOT</karaf.resources.version>
+    <karaf.resources.version>1.5.0-Lithium</karaf.resources.version>
     <build.plugins.plugin.version>1.9.1</build.plugins.plugin.version>
-    <karaf.branding.version>1.0.0-SNAPSHOT</karaf.branding.version>
 
     <!-- Karaf feature version -->
-    <feature.base.version>1.5.0-SNAPSHOT</feature.base.version>
-    <feature.empty.version>1.5.0-SNAPSHOT</feature.empty.version>
-    <feature.l2switch.version>0.2.0-SNAPSHOT</feature.l2switch.version>
-    <feature.dlux.version>0.2.0-SNAPSHOT</feature.dlux.version>
-    <feature.restconf.version>1.2.0-SNAPSHOT</feature.restconf.version>
-    <feature.mdsal.version>1.2.0-SNAPSHOT</feature.mdsal.version>
-    <feature.openflowplugin.version>0.1.0-SNAPSHOT</feature.openflowplugin.version>
-    <feature.odl.tutorial.version>1.0.0-SNAPSHOT</feature.odl.tutorial.version>
+    <feature.base.version>1.5.0-Lithium</feature.base.version>
+    <feature.empty.version>1.5.0-Lithium</feature.empty.version>
+    <feature.l2switch.version>0.2.0-Lithium</feature.l2switch.version>
+    <feature.dlux.version>0.2.0-Lithium</feature.dlux.version>
+    <feature.restconf.version>1.2.0-Lithium</feature.restconf.version>
+    <feature.mdsal.version>1.2.0-Lithium</feature.mdsal.version>
+    <feature.openflowplugin.version>0.1.0-Lithium</feature.openflowplugin.version>
 
   </properties>
 
