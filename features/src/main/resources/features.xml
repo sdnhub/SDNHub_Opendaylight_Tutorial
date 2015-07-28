@@ -13,12 +13,19 @@
         <bundle>mvn:org.sdnhub.odl.tutorial.tapapp/tapapp-model/${tapapp.version}</bundle>
         <configfile finalname="etc/opendaylight/karaf/${tapapp.configfile}">mvn:org.sdnhub.odl.tutorial.tapapp/tapapp-config/${tapapp.version}/xml/config</configfile>
     </feature>
-
     <feature name="sdnhub-tutorial-learning-switch" description="SDN Hub Tutorial :: OpenDaylight :: Learning switch" version='${project.version}'>
         <feature version="${openflowplugin.version}">odl-openflowplugin-southbound</feature>
         <feature version="${openflowplugin.version}">odl-openflowplugin-flow-services</feature>
         <feature version="${mdsal.version}">odl-mdsal-broker</feature>
         <bundle>mvn:org.sdnhub.odl.tutorial.learning-switch/learning-switch-impl/${learning-switch.version}</bundle>
         <configfile finalname="etc/opendaylight/karaf/${learning-switch.configfile}">mvn:org.sdnhub.odl.tutorial.learning-switch/learning-switch-config/${learning-switch.version}/xml/config</configfile>
+      </feature>
+      <feature name="sdnhub-tutorial-acl" description="SDN Hub Tutorial :: OpenDaylight :: Access Control List" version='${project.version}'>
+        <feature version="${openflowplugin.version}">odl-openflowplugin-southbound</feature>
+        <feature version="${openflowplugin.version}">odl-openflowplugin-flow-services</feature>
+        <feature version="${mdsal.version}">odl-mdsal-broker</feature>
+        <bundle>mvn:org.sdnhub.odl.tutorial.acl/acl-impl/${acl.version}</bundle>
+        <bundle>mvn:org.sdnhub.odl.tutorial.acl/acl-model/${acl.version}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/${acl.configfile}">mvn:org.sdnhub.odl.tutorial.acl/acl-config/${acl.version}/xml/config</configfile>
     </feature>
 </features>

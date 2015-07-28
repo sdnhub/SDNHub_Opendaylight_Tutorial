@@ -1,0 +1,40 @@
+module acl {
+    yang-version 1;
+    namespace "urn:sdnhub:odl:tutorial:acl";
+    prefix acl;
+
+    import opendaylight-inventory {prefix inv; revision-date 2013-08-19;}
+    import yang-ext {prefix ext; revision-date "2013-07-09";}
+    import ietf-yang-types { prefix yang; revision-date 2010-09-24; }
+    import ietf-inet-types { prefix inet; }
+    description "ACL configuration";
+
+    revision "2015-07-22" {
+        description "Initial version.";
+    }
+
+    typedef port-number {
+        type uint32;
+    }
+
+    container acl-spec {
+        list acl {
+            key "destination";
+            leaf destination {
+                type string;
+                }
+            leaf node {
+                mandatory true;
+                type leafref {
+                    path "/inv:nodes/inv:node/inv:id";
+                }
+            }
+            leaf ip-addr {
+                type inet:ipv4-prefix;
+            }
+            leaf port {
+                type port-number;
+            }
+        }
+    }
+}
