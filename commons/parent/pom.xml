@@ -57,7 +57,7 @@
 
     <!-- Karaf and maven dependencies -->
     <opendaylight-karaf-empty.version>1.6.0-Lithium</opendaylight-karaf-empty.version>
-    <karaf.version>3.0.2</karaf.version>
+    <karaf.version>3.0.3</karaf.version>
     <karaf.resources.version>1.5.0-Lithium</karaf.resources.version>
     <build.plugins.plugin.version>1.9.1</build.plugins.plugin.version>
 
