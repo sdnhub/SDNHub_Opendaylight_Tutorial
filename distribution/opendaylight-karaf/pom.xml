@@ -76,6 +76,15 @@
 
     <dependency>
       <groupId>org.opendaylight.controller</groupId>
+      <artifactId>features-netconf-connector</artifactId>
+      <version>${feature.netconf.connector.version}</version>
+      <classifier>features</classifier>
+      <type>xml</type>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.opendaylight.controller</groupId>
       <artifactId>features-restconf</artifactId>
       <version>${feature.restconf.version}</version>
       <classifier>features</classifier>
@@ -197,7 +206,6 @@
         <configuration>
           <!-- no startupFeatures -->
           <bootFeatures>
-              <feature>standard</feature>
               <feature>standard</feature>
               <feature>odl-base-all</feature>
               <feature>odl-restconf-noauth</feature>
