@@ -1,0 +1,59 @@
+module router {
+    yang-version 1;
+    namespace "urn:sdnhub:odl:tutorial:router";
+    prefix router;
+
+    description "Router configuration";
+
+    revision "2015-07-28" {
+        description "Initial version.";
+    }
+   
+    list interfaces {
+        key id;
+        leaf id {
+            type string;
+        }
+        leaf ip-address {
+            type string;
+        }
+    }
+
+    container router {
+        list ospf {
+            key process-id;
+            leaf process-id {
+                type uint32;
+            }
+            list networks {
+                key subnet-ip;
+                leaf subnet-ip {
+                    type string;
+                }
+                leaf area-id {
+                    type uint32;
+                }
+            }
+        }
+
+        list bgp {
+            key as-number;
+            leaf as-number {
+                type uint32;
+            }
+            leaf router-id {
+                type string;
+            }
+            list neighbors {
+                key as-number;
+                leaf as-number {
+                    type uint32;
+                }
+                leaf peer-ip {
+                    type string;
+                }
+            }
+        }
+    }
+}
+
