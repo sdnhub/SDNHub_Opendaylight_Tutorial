@@ -34,6 +34,8 @@
     <feature.learning-switch.version>1.0.0-SNAPSHOT</feature.learning-switch.version>
     <tapapp.version>1.0.0-SNAPSHOT</tapapp.version>
     <feature.tapapp.version>1.0.0-SNAPSHOT</feature.tapapp.version>
+    <acl.version>1.0.0-SNAPSHOT</acl.version>
+    <feature.acl.version>1.0.0-SNAPSHOT</feature.acl.version>
     <utils.version>1.0.0-SNAPSHOT</utils.version>
     <feature.odl.tutorial.version>1.0.0-SNAPSHOT</feature.odl.tutorial.version>
     <karaf.branding.version>1.0.0-SNAPSHOT</karaf.branding.version>
@@ -41,6 +43,7 @@
     <!-- Project config files -->
     <learning-switch.configfile>49-learning-switch-config.xml</learning-switch.configfile>
     <tapapp.configfile>50-tapapp-config.xml</tapapp.configfile>
+    <acl.configfile>51-acl-config.xml</acl.configfile>
 
     <!-- ODL Controller Dependency Versions -->
     <mdsal.version>1.2.0-Lithium</mdsal.version>

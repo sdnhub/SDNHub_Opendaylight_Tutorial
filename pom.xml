@@ -18,6 +18,7 @@
       <module>commons/utils</module>  <!-- Common utilities useful for flow programming -->
       <module>learning-switch</module><!-- App 1: Learning switch -->
       <module>tapapp</module>         <!-- App 2: Traffic tap -->
+      <module>acl</module>            <!-- App 3: Access Control List -->
       <module>features</module>       <!-- Karaf feature description -->
       <module>distribution</module>   <!-- Branding and packaging -->
   </modules>
