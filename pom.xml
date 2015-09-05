@@ -14,13 +14,14 @@
   <packaging>pom</packaging>
   <url>http://sdnhub.org/tutorials/opendaylight</url>
   <modules>
-      <module>commons/parent</module> <!-- Common properties -->
-      <module>commons/utils</module>  <!-- Common utilities useful for flow programming -->
-      <module>learning-switch</module><!-- App 1: Learning switch -->
-      <module>tapapp</module>         <!-- App 2: Traffic tap -->
-      <module>acl</module>            <!-- App 3: Access Control List -->
-      <module>features</module>       <!-- Karaf feature description -->
-      <module>distribution</module>   <!-- Branding and packaging -->
+      <module>commons/parent</module>  <!-- Common properties -->
+      <module>commons/utils</module>   <!-- Common utilities useful for flow programming -->
+      <module>learning-switch</module> <!-- App 1: Learning switch -->
+      <module>tapapp</module>          <!-- App 2: Traffic tap -->
+      <module>acl</module>             <!-- App 3: Access Control List -->
+      <module>netconf-exercise</module><!-- App 4: Netconf exercise -->
+      <module>features</module>        <!-- Karaf feature description -->
+      <module>distribution</module>    <!-- Branding and packaging -->
   </modules>
 
 </project>

@@ -39,11 +39,13 @@
     <utils.version>1.0.0-SNAPSHOT</utils.version>
     <feature.odl.tutorial.version>1.0.0-SNAPSHOT</feature.odl.tutorial.version>
     <karaf.branding.version>1.0.0-SNAPSHOT</karaf.branding.version>
+    <netconf-exercise.version>1.0.0-SNAPSHOT</netconf-exercise.version>
 
     <!-- Project config files -->
     <learning-switch.configfile>49-learning-switch-config.xml</learning-switch.configfile>
     <tapapp.configfile>50-tapapp-config.xml</tapapp.configfile>
     <acl.configfile>51-acl-config.xml</acl.configfile>
+    <netconf-exercise.configfile>51-netconf-exercise-config.xml</netconf-exercise.configfile>
 
     <!-- ODL Controller Dependency Versions -->
     <mdsal.version>1.2.0-Lithium</mdsal.version>

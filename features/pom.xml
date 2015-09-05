@@ -46,6 +46,14 @@
         </dependency>
         <dependency>
             <groupId>org.opendaylight.controller</groupId>
+            <artifactId>features-netconf-connector</artifactId>
+            <version>${feature.netconf.connector.version}</version>
+            <classifier>features</classifier>
+            <type>xml</type>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.controller</groupId>
             <artifactId>opendaylight-karaf-empty</artifactId>
             <type>zip</type>
             <version>${feature.empty.version}</version>
@@ -68,7 +76,7 @@
             <artifactId>tapapp-impl</artifactId>
             <version>${tapapp.version}</version>
           </dependency>
-          <!-- Learning switch app specific artifacts -->
+        <!-- Learning switch app specific artifacts -->
         <dependency>
             <groupId>org.sdnhub.odl.tutorial.learning-switch</groupId>
             <artifactId>learning-switch-config</artifactId>
@@ -98,6 +106,24 @@
             <groupId>org.sdnhub.odl.tutorial.acl</groupId>
             <artifactId>acl-model</artifactId>
             <version>${acl.version}</version>
+        </dependency>
+        <!-- netconf exercise specific artifacts -->
+        <dependency>
+            <groupId>org.sdnhub.odl.tutorial.netconf-exercise</groupId>
+            <artifactId>netconf-exercise-config</artifactId>
+            <version>${netconf-exercise.version}</version>
+            <type>xml</type>
+            <classifier>config</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.sdnhub.odl.tutorial.netconf-exercise</groupId>
+            <artifactId>netconf-exercise-model</artifactId>
+            <version>${netconf-exercise.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.sdnhub.odl.tutorial.netconf-exercise</groupId>
+            <artifactId>netconf-exercise-impl</artifactId>
+            <version>${netconf-exercise.version}</version>
         </dependency>
     </dependencies>
     <build>
