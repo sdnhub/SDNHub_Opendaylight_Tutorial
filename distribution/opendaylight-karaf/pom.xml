@@ -37,12 +37,12 @@
     <dependency>
       <groupId>org.opendaylight.controller</groupId>
       <artifactId>opendaylight-karaf-resources</artifactId>
-      <version>${karaf.resources.version}</version>
+      <version>${opendaylight-karaf-resources.version}</version>
     </dependency>
     <dependency>
       <groupId>org.sdnhub.odl.tutorial.distribution</groupId>
       <artifactId>karaf-branding</artifactId>
-      <version>${karaf.branding.version}</version>
+      <version>${karaf-branding.version}</version>
     </dependency>
 
     <!-- Project feature dependencies -->
@@ -75,9 +75,18 @@
     </dependency>
 
     <dependency>
-      <groupId>org.opendaylight.controller</groupId>
-      <artifactId>features-restconf</artifactId>
-      <version>${feature.restconf.version}</version>
+      <groupId>org.opendaylight.aaa</groupId>
+      <artifactId>features-aaa</artifactId>
+      <version>${feature.aaa.version}</version>
+      <classifier>features</classifier>
+      <type>xml</type>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.opendaylight.aaa</groupId>
+      <artifactId>features-aaa-authz</artifactId>
+      <version>${feature.aaa.version}</version>
       <classifier>features</classifier>
       <type>xml</type>
       <scope>runtime</scope>
@@ -198,8 +207,6 @@
           <!-- no startupFeatures -->
           <bootFeatures>
               <feature>standard</feature>
-              <feature>odl-base-all</feature>
-              <feature>odl-restconf-noauth</feature>
               <feature>sdnhub-tutorial-tapapp</feature>
           </bootFeatures>
           <!-- no installedFeatures -->

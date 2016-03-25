@@ -17,7 +17,7 @@
     <dependencies>
         <!-- External features that will be referenced -->
         <dependency>
-            <groupId>org.opendaylight.controller</groupId>
+            <groupId>org.opendaylight.netconf</groupId>
             <artifactId>features-restconf</artifactId>
             <version>${feature.restconf.version}</version>
             <classifier>features</classifier>
@@ -31,13 +31,6 @@
             <type>xml</type>
         </dependency>
         <dependency>
-            <groupId>org.opendaylight.controller</groupId>
-            <artifactId>features-base</artifactId>
-            <version>${feature.base.version}</version>
-            <classifier>features</classifier>
-            <type>xml</type>
-        </dependency>
-        <dependency>
             <groupId>org.opendaylight.openflowplugin</groupId>
             <artifactId>features-openflowplugin</artifactId>
             <version>${feature.openflowplugin.version}</version>
@@ -45,19 +38,13 @@
             <type>xml</type>
         </dependency>
         <dependency>
-            <groupId>org.opendaylight.controller</groupId>
+            <groupId>org.opendaylight.netconf</groupId>
             <artifactId>features-netconf-connector</artifactId>
             <version>${feature.netconf.connector.version}</version>
             <classifier>features</classifier>
             <type>xml</type>
-            <scope>runtime</scope>
         </dependency>
-        <dependency>
-            <groupId>org.opendaylight.controller</groupId>
-            <artifactId>opendaylight-karaf-empty</artifactId>
-            <type>zip</type>
-            <version>${feature.empty.version}</version>
-        </dependency>
+
         <!-- Tap app specific artifacts -->
         <dependency>
             <groupId>org.sdnhub.odl.tutorial.tapapp</groupId>

@@ -83,7 +83,6 @@ module tap {
         list tap {
             key "id";
             leaf id {
-               config false;
                type string;
             }
             uses tap-grouping;

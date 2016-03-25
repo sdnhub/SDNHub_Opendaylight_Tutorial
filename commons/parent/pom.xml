@@ -8,7 +8,7 @@
   <parent>
     <groupId>org.opendaylight.odlparent</groupId>
     <artifactId>odlparent</artifactId>
-    <version>1.5.0-SNAPSHOT</version>
+    <version>1.6.1-Beryllium-SR1</version>
     <relativePath></relativePath>
   </parent>
 
@@ -26,6 +26,7 @@
     <java.version.source>1.7</java.version.source>
     <java.version.target>1.7</java.version.target>
     <checkstyle.skip>true</checkstyle.skip>
+    <maven.javadoc.skip>true</maven.javadoc.skip>
     <codeGeneratorPath>src/main/yang-gen-code</codeGeneratorPath>
     <configCodeGeneratorPath>src/main/yang-gen-config</configCodeGeneratorPath>
 
@@ -33,13 +34,11 @@
     <learning-switch.version>1.0.0-SNAPSHOT</learning-switch.version>
     <feature.learning-switch.version>1.0.0-SNAPSHOT</feature.learning-switch.version>
     <tapapp.version>1.0.0-SNAPSHOT</tapapp.version>
-    <feature.tapapp.version>1.0.0-SNAPSHOT</feature.tapapp.version>
     <acl.version>1.0.0-SNAPSHOT</acl.version>
-    <feature.acl.version>1.0.0-SNAPSHOT</feature.acl.version>
     <utils.version>1.0.0-SNAPSHOT</utils.version>
-    <feature.odl.tutorial.version>1.0.0-SNAPSHOT</feature.odl.tutorial.version>
-    <karaf.branding.version>1.0.0-SNAPSHOT</karaf.branding.version>
+    <karaf-branding.version>1.0.0-SNAPSHOT</karaf-branding.version>
     <netconf-exercise.version>1.0.0-SNAPSHOT</netconf-exercise.version>
+    <feature.odl.tutorial.version>1.0.0-SNAPSHOT</feature.odl.tutorial.version>
 
     <!-- Project config files -->
     <learning-switch.configfile>49-learning-switch-config.xml</learning-switch.configfile>
@@ -48,33 +47,35 @@
     <netconf-exercise.configfile>51-netconf-exercise-config.xml</netconf-exercise.configfile>
 
     <!-- ODL Controller Dependency Versions -->
-    <mdsal.version>1.2.0-Lithium</mdsal.version>
-    <controller.model.version>1.2.0-Lithium</controller.model.version>
-    <controller.config.version>0.3.0-Lithium</controller.config.version>
-    <yangtools.version>0.7.0-Lithium</yangtools.version>
-    <yang.jmx.version>0.3.0-Lithium</yang.jmx.version>
-    <ietf-inet-types.version>2010.09.24.7-Lithium</ietf-inet-types.version>
-    <ietf-yang-types.version>2010.09.24.7-Lithium</ietf-yang-types.version>
-    <yang-ext.version>2013.09.07.7-Lithium</yang-ext.version>
+    <yang-binding.version>0.8.1-Beryllium-SR1</yang-binding.version>
+    <maven-sal-api-gen-plugin.version>0.8.1-Beryllium-SR1</maven-sal-api-gen-plugin.version>
+    <yangtools.version>0.8.1-Beryllium-SR1</yangtools.version>
+    <yang.jmx.version>0.4.1-Beryllium-SR1</yang.jmx.version>
+    <config-api.version>0.4.1-Beryllium-SR1</config-api.version>
+    <sal-binding.version>1.3.1-Beryllium-SR1</sal-binding.version>
+    <ietf-topology.version>2013.10.21.8.1-Beryllium-SR1</ietf-topology.version>
+    <ietf-inet-types.version>2010.09.24.8.1-Beryllium-SR1</ietf-inet-types.version>
+    <ietf-yang-types.version>2010.09.24.8.1-Beryllium-SR1</ietf-yang-types.version>
+    <yang-ext.version>2013.09.07.8.1-Beryllium-SR1</yang-ext.version>
+    <controller-model.version>1.3.1-Beryllium-SR1</controller-model.version>
 
     <!-- Southbound plugin versions -->
-    <openflowplugin.version>0.1.0-Lithium</openflowplugin.version>
+    <openflowplugin.version>0.2.1-Beryllium-SR1</openflowplugin.version>
+    <sal-netconf-connector.version>1.3.1-Beryllium-SR1</sal-netconf-connector.version>
 
     <!-- Karaf and maven dependencies -->
-    <opendaylight-karaf-empty.version>1.6.0-Lithium</opendaylight-karaf-empty.version>
     <karaf.version>3.0.3</karaf.version>
-    <karaf.resources.version>1.5.0-Lithium</karaf.resources.version>
     <build.plugins.plugin.version>1.9.1</build.plugins.plugin.version>
+    <opendaylight-karaf-resources.version>1.6.1-Beryllium-SR1</opendaylight-karaf-resources.version>
 
     <!-- Karaf feature version -->
-    <feature.base.version>1.5.0-Lithium</feature.base.version>
-    <feature.empty.version>1.5.0-Lithium</feature.empty.version>
-    <feature.l2switch.version>0.2.0-Lithium</feature.l2switch.version>
-    <feature.dlux.version>0.2.0-Lithium</feature.dlux.version>
-    <feature.netconf.connector.version>1.2.0-Lithium</feature.netconf.connector.version>
-    <feature.restconf.version>1.2.0-Lithium</feature.restconf.version>
-    <feature.mdsal.version>1.2.0-Lithium</feature.mdsal.version>
-    <feature.openflowplugin.version>0.1.0-Lithium</feature.openflowplugin.version>
+    <feature.l2switch.version>0.3.1-Beryllium-SR1</feature.l2switch.version>
+    <feature.dlux.version>0.3.1-Beryllium-SR1</feature.dlux.version>
+    <feature.aaa.version>0.3.1-Beryllium-SR1</feature.aaa.version>
+    <feature.netconf.connector.version>1.0.1-Beryllium-SR1</feature.netconf.connector.version>
+    <feature.restconf.version>1.3.1-Beryllium-SR1</feature.restconf.version>
+    <feature.mdsal.version>1.3.1-Beryllium-SR1</feature.mdsal.version>
+    <feature.openflowplugin.version>0.2.1-Beryllium-SR1</feature.openflowplugin.version>
 
   </properties>
 
@@ -150,17 +151,17 @@
   <dependencies>
     <!-- Dependencies for the Yang and configs -->
     <dependency>
-      <groupId>org.opendaylight.yangtools.model</groupId>
+      <groupId>org.opendaylight.mdsal.model</groupId>
       <artifactId>ietf-yang-types</artifactId>
       <version>${ietf-yang-types.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.opendaylight.yangtools.model</groupId>
+      <groupId>org.opendaylight.mdsal.model</groupId>
       <artifactId>ietf-inet-types</artifactId>
       <version>${ietf-inet-types.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.opendaylight.yangtools.model</groupId>
+      <groupId>org.opendaylight.mdsal.model</groupId>
       <artifactId>yang-ext</artifactId>
       <version>${yang-ext.version}</version>
     </dependency>
@@ -170,24 +171,24 @@
       <version>${yangtools.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.opendaylight.yangtools</groupId>
+      <groupId>org.opendaylight.mdsal</groupId>
       <artifactId>yang-binding</artifactId>
-      <version>${yangtools.version}</version>
+      <version>${yang-binding.version}</version>
     </dependency>
     <dependency>
       <groupId>org.opendaylight.controller</groupId>
       <artifactId>config-api</artifactId>
-      <version>${controller.config.version}</version>
+      <version>${config-api.version}</version>
     </dependency>
     <dependency>
       <groupId>org.opendaylight.controller</groupId>
       <artifactId>sal-binding-config</artifactId>
-      <version>${mdsal.version}</version>
+      <version>${sal-binding.version}</version>
     </dependency>
     <dependency>
       <groupId>org.opendaylight.controller</groupId>
       <artifactId>sal-binding-api</artifactId>
-      <version>${mdsal.version}</version>
+      <version>${sal-binding.version}</version>
     </dependency>
   </dependencies>
 </project>

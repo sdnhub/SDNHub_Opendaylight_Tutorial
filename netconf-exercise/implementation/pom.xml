@@ -14,14 +14,14 @@
 
   <dependencies>
       <dependency>
-          <groupId>org.opendaylight.controller</groupId>
+          <groupId>org.opendaylight.netconf</groupId>
           <artifactId>sal-netconf-connector</artifactId>
-          <version>${mdsal.version}</version>
+          <version>${sal-netconf-connector.version}</version>
       </dependency>
       <dependency>
           <groupId>org.opendaylight.controller.model</groupId>
           <artifactId>model-topology</artifactId>
-          <version>${mdsal.version}</version>
+          <version>${controller-model.version}</version>
       </dependency>
       <dependency>
           <groupId>org.sdnhub.odl.tutorial</groupId>
@@ -32,12 +32,6 @@
           <groupId>org.sdnhub.odl.tutorial.netconf-exercise</groupId>
           <artifactId>netconf-exercise-model</artifactId>
           <version>${netconf-exercise.version}</version>
-      </dependency>
-    <!-- Dependencies for MD-SAL models -->
-      <dependency>
-          <groupId>org.opendaylight.openflowplugin.model</groupId>
-          <artifactId>model-flow-service</artifactId>
-          <version>0.1.0-SNAPSHOT</version>
       </dependency>
   </dependencies>
   <build>
@@ -77,9 +71,9 @@
        </executions>
        <dependencies>
          <dependency>
-           <groupId>org.opendaylight.yangtools</groupId>
+           <groupId>org.opendaylight.mdsal</groupId>
            <artifactId>maven-sal-api-gen-plugin</artifactId>
-           <version>${yangtools.version}</version>
+           <version>${maven-sal-api-gen-plugin.version}</version>
            <type>jar</type>
          </dependency>
          <dependency>

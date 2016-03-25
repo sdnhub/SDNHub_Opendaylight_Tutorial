@@ -23,11 +23,10 @@
           <artifactId>acl-model</artifactId>
           <version>${acl.version}</version>
       </dependency>
-    <!-- Dependencies for MD-SAL models -->
       <dependency>
           <groupId>org.opendaylight.openflowplugin.model</groupId>
           <artifactId>model-flow-service</artifactId>
-          <version>0.1.0-SNAPSHOT</version>
+          <version>${openflowplugin.version}</version>
       </dependency>
   </dependencies>
   <build>
@@ -67,9 +66,9 @@
        </executions>
        <dependencies>
          <dependency>
-           <groupId>org.opendaylight.yangtools</groupId>
+           <groupId>org.opendaylight.mdsal</groupId>
            <artifactId>maven-sal-api-gen-plugin</artifactId>
-           <version>${yangtools.version}</version>
+           <version>${maven-sal-api-gen-plugin.version}</version>
            <type>jar</type>
          </dependency>
          <dependency>
