@@ -189,7 +189,7 @@ public class TutorialACL  implements AutoCloseable, DataChangeListener, PacketPr
         flowBuilder.setBarrier(true);
         flowBuilder.setTableId((short)0);
         flowBuilder.setKey(key);
-        flowBuilder.setPriority(32768);
+        flowBuilder.setPriority(65535);
         flowBuilder.setFlowName(flowId);
         flowBuilder.setHardTimeout(0);
         flowBuilder.setIdleTimeout(0);
