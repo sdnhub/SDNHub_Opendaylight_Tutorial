@@ -13,6 +13,9 @@ This is the OpenDaylight project source code used by the [our tutorial](http://s
 * distribution/opendaylight-karaf: contains packaging relevant pom to * generate a running directory 
 
 # HOW TO BUILD
+
+Before building, be sure to configure your environment correctly.  See the instructions at [GettingStarted:Development Environment Setup](https://wiki.opendaylight.org/view/GettingStarted:Development_Environment_Setup).  In particular, you must customize your `~/.m2/settings.xml` file, since "OpenDaylight maintains its own repositories outside of Maven Central, which means maven cannot resolve OpenDaylight artifacts by default".
+
 In order to build it's required to have JDK 1.8+ and Maven 3.2+. 
 The following commands are used to build and run.
 ```
