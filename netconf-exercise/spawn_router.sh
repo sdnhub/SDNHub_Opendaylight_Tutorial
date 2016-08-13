@@ -13,8 +13,8 @@ echo $DOCKER_ID
 echo "Spawned container with IP `sudo docker inspect --format '{{ .NetworkSettings.IPAddress }}' $DEVICE_NAME`"
 
 ######## Start netconf server with custom YANG model
-sudo cp base_datastore.xml /var/lib/docker/aufs/mnt/${DOCKER_ID}/usr/local/etc/netopeer/cfgnetopeer/datastore.xml
-sudo cp router.yang /var/lib/docker/aufs/mnt/${DOCKER_ID}/root/router.yang
+sudo docker cp base_datastore.xml $DEVICE_NAME:/usr/local/etc/netopeer/cfgnetopeer/datastore.xml
+sudo docker cp router.yang $DEVICE_NAME:/root/router.yang
 sudo docker exec $DEVICE_NAME pyang -f yin /root/router.yang -o /root/router.yin
 sudo docker exec $DEVICE_NAME netopeer-manager add --name router --model router.yin --datastore /usr/local/etc/netopeer/cfgnetopeer/router.xml
 sudo docker exec $DEVICE_NAME netopeer-server -d
